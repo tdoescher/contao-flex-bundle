@@ -23,10 +23,10 @@ class Flex
             $keys = array_keys($GLOBALS['TL_FLEX'][$root]);
 
             $currentKey = end($keys);
-            $current = $GLOBALS['TL_FLEX'][$root][$currentKey];
+            $current = $currentKey ? $GLOBALS['TL_FLEX'][$root][$currentKey] : 0;
 
             $parentKey = prev($keys);
-            $parent = $GLOBALS['TL_FLEX'][$root][$parentKey];
+            $parent = $parentKey ? $GLOBALS['TL_FLEX'][$root][$parentKey] : 0;
             
             if(!in_array($object->type, ['flex_open', 'flex_close', 'flex_div_open', 'flex_div_close']) && $content != "")
             {
