@@ -25,7 +25,7 @@ class FlexDivOpen extends \ContentElement
 
             $key = count($GLOBALS['TL_FLEX'][$root]) + 1;
 
-            $GLOBALS['TL_FLEX'][$root][$key] = ['type' => $object->type];
+            $GLOBALS['TL_FLEX'][$root][$key] = ['type' => $this->type];
         }
     }
 }
