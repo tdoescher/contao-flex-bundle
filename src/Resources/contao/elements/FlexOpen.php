@@ -21,6 +21,7 @@ class FlexOpen extends \ContentElement
             if($this->arrData['flex_md']) $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_md'][0].':</strong> '.$this->arrData['flex_md'];
             if($this->arrData['flex_lg']) $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_lg'][0].':</strong> '.$this->arrData['flex_lg'];
             if($this->arrData['flex_xl']) $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_xl'][0].':</strong> '.$this->arrData['flex_xl'];
+            if($this->arrData['flex_xxl']) $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_xxl'][0].':</strong> '.$this->arrData['flex_xxl'];
             if($this->arrData['flex_class']) $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_class'][0].':</strong> '.$this->arrData['flex_class'];
 
             $this->Template->wildcard = implode(' - ', $wildcard);
@@ -33,6 +34,7 @@ class FlexOpen extends \ContentElement
             if($this->arrData['flex_xs']) $segmentation['xs'] = explode(':', $this->arrData['flex_xs']);
             if($this->arrData['flex_lg']) $segmentation['lg'] = explode(':', $this->arrData['flex_lg']);
             if($this->arrData['flex_xl']) $segmentation['xl'] = explode(':', $this->arrData['flex_xl']);
+            if($this->arrData['flex_xl']) $segmentation['xxl'] = explode(':', $this->arrData['flex_xxl']);
 
             $class = array();
             if($this->arrData['flex_class']) $class = explode(':', $this->arrData['flex_class']);
@@ -53,11 +55,11 @@ class FlexOpen extends \ContentElement
             if($this->arrData['flex_justify'] && $this->arrData['flex_justify'] !== 'normal') $classes[] = 'justify-content-'.$this->arrData['flex_justify'];
             if($this->arrData['flex_align'] && $this->arrData['flex_align'] !== 'normal') $classes[] = 'align-items-'.$this->arrData['flex_align'];
 
-            $classes[] = $this->cssID[1];
+            $this->Template->containerClasses = implode(' ', $classes);
 
-            $cssID = $this->cssID[0] ? $this->cssID[0] : 'flex-'.$this->id;
+            $id = $this->cssID[0] ? $this->cssID[0] : 'flex-'.$this->id;
 
-            $this->cssID = [$cssID, implode(' ', $classes)];
+            $this->cssID = [$id, $this->cssID[1]];
         }
     }
 }
