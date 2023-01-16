@@ -1,6 +1,6 @@
 <?php
 
-$GLOBALS['TL_DCA']['tl_content']['palettes']['flex_open'] = '{type_legend},type;{flex_legend},flex_xs,flex_sm,flex_md,flex_lg,flex_xl,flex_xxl;{flex_extended_legend},flex_class,flex_repeat,flex_bootstrap,flex_multiline,flex_justify,flex_align,flex_gap;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['flex_open'] = '{type_legend},type;{flex_legend},flex_xs,flex_sm,flex_md,flex_lg,flex_xl,flex_xxl;{flex_extended_legend},flex_class,flex_repeat,flex_bootstrap,flex_multiline,flex_justify,flex_align,flex_container_class;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['flex_close'] = '{type_legend},type;{protected_legend:hide},protected;{expert_legend:hide},guests;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['flex_div_open'] = '{type_legend},type;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['flex_div_close'] = '{type_legend},type;{protected_legend:hide},protected;{expert_legend:hide},guests;{invisible_legend:hide},invisible,start,stop';
@@ -108,4 +108,13 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['flex_align'] = array
     'reference' => &$GLOBALS['TL_LANG']['tl_content']['flex_align_options'],
     'eval'      => array('helpwizard' => false, 'chosen' => false, 'tl_class' => 'w50'),
     'sql'       => array('name' => 'flex_align', 'type' => 'string', 'length' => 13, 'default' => 'normal')
+);
+
+$GLOBALS['TL_DCA']['tl_content']['fields']['flex_container_class'] = array
+(
+    'label'     => &$GLOBALS['TL_LANG']['tl_content']['flex_container_class'],
+    'exclude'   => true,
+    'inputType' => 'text',
+    'eval'      => array('maxlength' => '255', 'tl_class' => 'clr'),
+    'sql'       => "varchar(255) NOT NULL default ''"
 );

@@ -10,8 +10,9 @@ $GLOBALS['TL_LANG']['tl_content']['flex_md'] = ['Tablet (md, 768px)', 'Bsp.: "3:
 $GLOBALS['TL_LANG']['tl_content']['flex_lg'] = ['Desktop (lg, 992px)', 'Bsp.: "2:4:4:2" für vier Spalten 16,6% / 33,3% / 33,3% / 16,6%'];
 $GLOBALS['TL_LANG']['tl_content']['flex_xl'] = ['Widescreen (xl, 1200px)', 'Bsp.: "4" für drei gleich große Spalten '];
 $GLOBALS['TL_LANG']['tl_content']['flex_xxl'] = ['Widescreen XXL (xxl, 1400px)', 'Bsp.: "6" für zwölf gleich große Spalten '];
-$GLOBALS['TL_LANG']['tl_content']['flex_class'] = ['Klassen', 'Zuweisung von CSS-Klassen zu den Elementen.'];
+$GLOBALS['TL_LANG']['tl_content']['flex_class'] = ['Klassen Spalten', 'Zuweisung von CSS-Klassen zu den Spalten.'];
 $GLOBALS['TL_LANG']['tl_content']['flex_justify'] = ['Ausrichtung horizontal', 'Wie sollen die Elemente horizontal ausgerichtet werden?'];
 $GLOBALS['TL_LANG']['tl_content']['flex_justify_options'] = ['normal' => '-', 'start' => 'flex-start', 'end' => 'flex-end', 'center' => 'center', 'around' => 'space-around', 'between' => 'space-between'];
 $GLOBALS['TL_LANG']['tl_content']['flex_align'] = ['Ausrichtung vertikal', 'Wie sollen die Elemente vertikal ausgerichtet werden?'];
 $GLOBALS['TL_LANG']['tl_content']['flex_align_options'] = ['normal' => '-', 'start' => 'flex-start', 'end' => 'flex-end', 'center' => 'center', 'baseline' => 'baseline', 'stretch' => 'stretch'];
+$GLOBALS['TL_LANG']['tl_content']['flex_container_class'] = ['Klassen Container', 'Zuweisung von CSS-Klassen für den Container.'];

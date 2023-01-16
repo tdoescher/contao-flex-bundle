@@ -34,7 +34,7 @@ class FlexOpen extends \ContentElement
             if($this->arrData['flex_xs']) $segmentation['xs'] = explode(':', $this->arrData['flex_xs']);
             if($this->arrData['flex_lg']) $segmentation['lg'] = explode(':', $this->arrData['flex_lg']);
             if($this->arrData['flex_xl']) $segmentation['xl'] = explode(':', $this->arrData['flex_xl']);
-            if($this->arrData['flex_xl']) $segmentation['xxl'] = explode(':', $this->arrData['flex_xxl']);
+            if($this->arrData['flex_xxl']) $segmentation['xxl'] = explode(':', $this->arrData['flex_xxl']);
 
             $class = array();
             if($this->arrData['flex_class']) $class = explode(':', $this->arrData['flex_class']);
@@ -54,12 +54,11 @@ class FlexOpen extends \ContentElement
 
             if($this->arrData['flex_justify'] && $this->arrData['flex_justify'] !== 'normal') $classes[] = 'justify-content-'.$this->arrData['flex_justify'];
             if($this->arrData['flex_align'] && $this->arrData['flex_align'] !== 'normal') $classes[] = 'align-items-'.$this->arrData['flex_align'];
+            if($this->arrData['flex_container_class']) $classes[] = $this->arrData['flex_container_class'];
 
-            $this->Template->containerClasses = implode(' ', $classes);
+            $this->Template->containerClass = implode(' ', $classes);
 
-            $id = $this->cssID[0] ? $this->cssID[0] : 'flex-'.$this->id;
-
-            $this->cssID = [$id, $this->cssID[1]];
+            $this->cssID = [$this->cssID[0] ? $this->cssID[0] : 'flex-'.$this->id, $this->cssID[1]];
         }
     }
 }
