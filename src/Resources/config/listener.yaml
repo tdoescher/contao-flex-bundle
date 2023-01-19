@@ -1,0 +1,6 @@
+services:
+  _defaults:
+    autoconfigure: true
+
+  tdoescher\FlexBundle\EventListener\GetAddCustomRegexpListener: ~
+  tdoescher\FlexBundle\EventListener\GetContentElementListener: ~
