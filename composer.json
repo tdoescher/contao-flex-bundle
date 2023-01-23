@@ -1,6 +1,6 @@
 {
     "name": "tdoescher/flex-bundle",
-    "description": "Flexbox System basierend auf den Bootstrap CSS-Klassen",
+    "description": "Flexbox System basierend auf Bootstrap",
     "type": "contao-module",
     "license": "LGPL-3.0-or-later",
     "authors": [
@@ -10,8 +10,8 @@
         }
     ],
     "require": {
-        "php": ">=8.0",
-        "contao/core-bundle": "^4.13 || ^5.0"
+        "php": ">=7.4",
+        "contao/core-bundle": "^4.11 || ^5.0"
     },
     "extra": {
         "contao-manager-plugin": "tdoescher\\FlexBundle\\ContaoManager\\Plugin"
@@ -19,6 +19,15 @@
     "autoload": {
         "psr-4": {
             "tdoescher\\FlexBundle\\": "src/"
-        }
+        },
+        "classmap": [
+            "src/Resources/contao/"
+        ],
+        "exclude-from-classmap": [
+            "src/Resources/contao/config/",
+            "src/Resources/contao/dca/",
+            "src/Resources/contao/languages/",
+            "src/Resources/contao/templates/"
+        ]
     }
 }
