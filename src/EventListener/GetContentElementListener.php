@@ -20,11 +20,11 @@ class GetContentElementListener
 {
   public static $displays = ['h', 'hidden', 's', 'show'];
 
-  public static $sizes = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', 'a', 'auto', 'n', 'none'];
+  public static $sizes = ['a', 'auto', 'n', 'none', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
 
   public static $offsets = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
   
-  public static $orders = ['0', '1', '2', '3', '4', '5', 'f', 'first', 'l', 'last'];
+  public static $orders = ['f', 'first', 'l', 'last', '0', '1', '2', '3', '4', '5'];
 
   public function __invoke(ContentModel $contentModel, string $buffer, $element): string
   {
@@ -50,7 +50,7 @@ class GetContentElementListener
       if($currentKey && $current['type'] === 'flex_open') {
         $GLOBALS['TL_FLEX'][$root][$currentKey]['position']++;
 
-        return '<div class="'.self::getClasses($GLOBALS['TL_FLEX'][$root][$currentKey]).'">'.$buffer.'</div>';
+        return '<div class="'.self::getClass($GLOBALS['TL_FLEX'][$root][$currentKey]).'">'.$buffer.'</div>';
       }
     }
 
@@ -58,7 +58,7 @@ class GetContentElementListener
       if($parentKey && $parent['type'] === 'flex_open') {
         $GLOBALS['TL_FLEX'][$root][$parentKey]['position']++;
 
-        return '<div class="'.self::getClasses($GLOBALS['TL_FLEX'][$root][$parentKey]).'">'.$buffer;
+        return '<div class="'.self::getClass($GLOBALS['TL_FLEX'][$root][$parentKey]).'">'.$buffer;
       }
     }
 
@@ -73,22 +73,31 @@ class GetContentElementListener
     return $buffer;
   }
 
-  protected static function getClasses($box)
+  protected static function getClass($box)
   {
-    $classes = [];
+    $class = [];
 
-    if(is_array($box['segmentation']) && count($box['segmentation'])) {
+    if(count($box['segmentation']) && $box['bootstrap']) {
       foreach($box['segmentation'] as $key => $column) {
         $position = $box['position'] - 1;
-        $classes[] = ($box['repeat']) ? $column[$position % count($column)] : $column[$position];
+        $class[] = ($box['repeat']) ? $column[$position % count($column)] : $column[$position];
       }
     }
- 
-    if(is_array($box['class']) && count($box['class'])) {
-      $position = $box['position'] - 1;
-      $classes[] = ($box['repeat']) ? $box['class'][$position % count($box['class'])] : $box['class'][$position];
+
+    if(count($class) === 0 && $box['bootstrap']) {
+      $class[] = 'col';
     }
 
-    return implode(' ', $classes);
+    if(!$box['bootstrap']) {
+      $class[] = 'cell';
+      $class[] = 'cell-'.$box['position'];
+    }
+
+    if(count($box['class'])) {
+      $position = $box['position'] - 1;
+      $class[] = ($box['repeat']) ? $box['class'][$position % count($box['class'])] : $box['class'][$position];
+    }
+
+    return implode(' ', $class);
   }
 }

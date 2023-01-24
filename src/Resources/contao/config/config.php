@@ -10,8 +10,8 @@
  */
 
 $GLOBALS['TL_WRAPPERS']['start'][] = 'flex_open';
-$GLOBALS['TL_WRAPPERS']['stop'][] = 'flex_close';
 $GLOBALS['TL_WRAPPERS']['start'][] = 'flex_div_open';
+$GLOBALS['TL_WRAPPERS']['stop'][] = 'flex_close';
 $GLOBALS['TL_WRAPPERS']['stop'][] = 'flex_div_close';
 
 $GLOBALS['TL_FLEX'] = [];

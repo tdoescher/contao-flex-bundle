@@ -2,7 +2,7 @@ services:
   _defaults:
     autoconfigure: true
 
-  tdoescher\FlexBundle\Controller\ContentElement\FlexCloseController: ~
-  tdoescher\FlexBundle\Controller\ContentElement\FlexDivCloseController: ~
-  tdoescher\FlexBundle\Controller\ContentElement\FlexDivOpenController: ~
   tdoescher\FlexBundle\Controller\ContentElement\FlexOpenController: ~
+  tdoescher\FlexBundle\Controller\ContentElement\FlexCloseController: ~
+  tdoescher\FlexBundle\Controller\ContentElement\FlexDivOpenController: ~
+  tdoescher\FlexBundle\Controller\ContentElement\FlexDivCloseController: ~

@@ -24,13 +24,13 @@ use tdoescher\FlexBundle;
 #[AsContentElement(category: 'flex')]
 class FlexOpenController extends AbstractContentElementController
 {
-  public static $displays = ['h', 'hidden', 's', 'show'];
-  
-  public static $sizes = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', 'a', 'auto', 'n', 'none'];
-  
-  public static $offsets = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
-  
-  public static $orders = ['0', '1', '2', '3', '4', '5', 'f', 'first', 'l', 'last'];
+  protected static $displays = ['h', 'hidden', 's', 'show'];
+
+  protected static $sizes = ['a', 'auto', 'n', 'none', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+
+  protected static $offsets = ['', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+
+  protected static $orders = ['f', 'first', 'l', 'last', '0', '1', '2', '3', '4', '5'];
 
   protected function getResponse(Template $template, ContentModel $model, Request $request): Response
   {
@@ -38,33 +38,62 @@ class FlexOpenController extends AbstractContentElementController
       $template = new BackendTemplate('be_wildcard');
 
       $wildcard = [];
-
-      if($model->flex_xs) $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_xs'][0].':</strong> '.$model->flex_xs;
-      if($model->flex_sm) $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_sm'][0].':</strong> '.$model->flex_sm;
-      if($model->flex_md) $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_md'][0].':</strong> '.$model->flex_md;
-      if($model->flex_lg) $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_lg'][0].':</strong> '.$model->flex_lg;
-      if($model->flex_xl) $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_xl'][0].':</strong> '.$model->flex_xl;
-      if($model->flex_xxl) $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_xxl'][0].':</strong> '.$model->flex_xxl;
-      if($model->flex_class) $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_class'][0].':</strong> '.$model->flex_class;
-      if($model->flex_container_class) $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_container_class'][0].':</strong> '.$model->flex_container_class;
-      if(unserialize($model->cssID)[1]) $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_main_class'].':</strong> '.unserialize($model->cssID)[1];
+      if($model->flex_xs) {
+        $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_xs'][0].':</strong> '.$model->flex_xs;
+      }
+      if($model->flex_sm) {
+        $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_sm'][0].':</strong> '.$model->flex_sm;
+      }
+      if($model->flex_md) {
+        $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_md'][0].':</strong> '.$model->flex_md;
+      }
+      if($model->flex_lg) {
+        $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_lg'][0].':</strong> '.$model->flex_lg;
+      }
+      if($model->flex_xl) {
+        $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_xl'][0].':</strong> '.$model->flex_xl;
+      }
+      if($model->flex_xxl) {
+        $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_xxl'][0].':</strong> '.$model->flex_xxl;
+      }
+      if($model->flex_class) {
+        $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_class'][0].':</strong> '.$model->flex_class;
+      }
+      if($model->flex_container_class) {
+        $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_container_class'][0].':</strong> '.$model->flex_container_class;
+      }
+      if(unserialize($model->cssID)[1]) {
+        $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_main_class'].':</strong> '.unserialize($model->cssID)[1];
+      }
  
       $template->wildcard = implode(' - ', $wildcard);
-        
+
       return $template->getResponse();
     }
 
     $root = $template->ptable.'.'.$template->pid;
 
     $segmentation = [];
-    if($model->flex_sm) $segmentation['sm'] = self::getSegmantation($model->flex_sm, 'sm', $model->flex_bootstrap);
-    if($model->flex_md) $segmentation['md'] = self::getSegmantation($model->flex_md, 'md', $model->flex_bootstrap);
-    if($model->flex_xs) $segmentation['xs'] = self::getSegmantation($model->flex_xs, 'xs', $model->flex_bootstrap);
-    if($model->flex_lg) $segmentation['lg'] = self::getSegmantation($model->flex_lg, 'lg', $model->flex_bootstrap);
-    if($model->flex_xl) $segmentation['xl'] = self::getSegmantation($model->flex_xl, 'xl', $model->flex_bootstrap);
-    if($model->flex_xxl) $segmentation['xxl'] = self::getSegmantation($model->flex_xxl, 'xxl', $model->flex_bootstrap);
+    if($model->flex_sm) {
+      $segmentation['sm'] = self::makeSegmantationClass($model->flex_sm, 'sm', $model->flex_bootstrap);
+    }
+    if($model->flex_md) {
+      $segmentation['md'] = self::makeSegmantationClass($model->flex_md, 'md', $model->flex_bootstrap);
+    }
+    if($model->flex_xs) {
+      $segmentation['xs'] = self::makeSegmantationClass($model->flex_xs, 'xs', $model->flex_bootstrap);
+    }
+    if($model->flex_lg) {
+       $segmentation['lg'] = self::makeSegmantationClass($model->flex_lg, 'lg', $model->flex_bootstrap);
+    }
+    if($model->flex_xl) {
+      $segmentation['xl'] = self::makeSegmantationClass($model->flex_xl, 'xl', $model->flex_bootstrap);
+    }
+    if($model->flex_xxl) {
+      $segmentation['xxl'] = self::makeSegmantationClass($model->flex_xxl, 'xxl', $model->flex_bootstrap);
+    }
 
-    $class = self::getClasses($model->flex_class);
+    $cellClass = self::makeClass($model->flex_class);
 
     if(!isset($GLOBALS['TL_FLEX'][$root])) {
       $GLOBALS['TL_FLEX'][$root] = [];
@@ -78,106 +107,122 @@ class FlexOpenController extends AbstractContentElementController
       'bootstrap' => $model->flex_bootstrap,
       'repeat' => $model->flex_repeat,
       'segmentation' => $segmentation,
-      'class' => $class
+      'class' => $cellClass
     ];
 
-    $classes = [];
-    $classes[] = $model->flex_bootstrap ? 'row' : 'flex';
+    $containerClass = [];
+    $containerClass[] = $model->flex_bootstrap ? 'row' : 'flex';
 
     if(in_array($model->flex_justify, ['start', 'end', 'center', 'around', 'between', 'evenly'])) {
-      $classes[] = 'justify-content-'.$model->flex_justify;
+      $containerClass[] = 'justify-content-'.$model->flex_justify;
     }
 
     if(in_array($model->flex_align, ['start', 'end', 'center', 'baseline', 'stretch'])) {
-      $classes[] = 'align-items-'.$model->flex_align;
+      $containerClass[] = 'align-items-'.$model->flex_align;
     }
 
     if(in_array($model->flex_gutter, ['0', '1', '2', '3', '5'])) {
-      $classes[] = 'gx-'.$model->flex_gutter;
+      $containerClass[] = 'gx-'.$model->flex_gutter;
     }
 
     if($model->flex_container_class) {
-      $classes[] = $model->flex_container_class;
+      $containerClass[] = $model->flex_container_class;
     }
 
-    $template->containerClass = implode(' ', $classes);
+    $template->containerClass = implode(' ', $containerClass);
     $template->cssID = $template->cssID ?: ' id="flex-'.$model->id.'"';
 
     return $template->getResponse();
   }
 
-  protected static function getSegmantation($segmantation, $base, $bootstrap)
+  protected static function makeSegmantationClass($segmentation, $base, $bootstrap)
   {
-    $columns = explode(':', $segmantation);
-    $classes = [];
+    $cells = explode(':', $segmentation);
+    $class = [];
  
-    foreach($columns as $key => $column) {
-      $prefix = $bootstrap ? 'col' : 'cell';
-      $base = ($base !== 'xs') ? $base : null;
-      $options = explode(',', $column);
+    $prefix = $bootstrap ? 'col' : 'cell';
+    $base = ($base !== 'xs') ? '-'.$base : null;
 
-      if(!array_key_exists(0, $options) || !$bootstrap) {
+    foreach($cells as $cell) {
+      $options = explode(',', $cell);
+      $cellClass = [];
+
+      if(count($options) === 0 || !$bootstrap) {
         continue;
       }
 
-      $optionKeySize = 0;
-      $optionKeyOffset = 1;
-      $optionKeyOrder = 2;
+      if(in_array(current($options), self::$displays, true)) {
+        $display = current($options);
 
-//       if(in_array($options[0], self::$displays)) {
-//         $optionKeySize = 1;
-//         $optionKeyOffset = 2;
-//         $optionKeyOrder = 3;
-// 
-//         if($options[0] === 'h' || $options[0] === 'hidden') {
-//           $classes[] = 'd-'.$base.'-none';
-//         }
-//         else if($options[0] === 's' || $options[0] === 'show') {
-//           $classes[] = 'd-'.$base.'-block';
-//         }
-//       }
-
-      if(array_key_exists($optionKeySize, $options) && in_array($options[$optionKeySize], self::$sizes)) {
-        if($options[$optionKeySize] === 'n' || $options[$optionKeySize] === 'none') {
-          $classes[] = $prefix.'-'.$base;
+        if($display === 'h' || $display === 'hidden') {
+          $cellClass[] = 'd'.$base.'-none';
         }
-        else if($options[$optionKeySize] === 'a') {
-          $classes[] = $prefix.'-'.$base.'-auto';
+        else if($display === 's' || $display === 'show') {
+          $cellClass[] = 'd'.$base.'-block';
+        }
+
+        next($options);
+      }
+
+      if(in_array(current($options), self::$sizes, true)) {
+        $size = current($options);
+
+        if($size === 'n' || $size === 'none') {
+          $cellClass[] = $prefix.$base;
+        }
+        else if($size === 'a') {
+          $cellClass[] = $prefix.$base.'-auto';
         }
         else {
-          $classes[] = $prefix.'-'.$base.'-'.$options[$optionKeySize];
+          $cellClass[] = $prefix.$base.'-'.$size;
         }
+
+        next($options);
       }
 
-      if(array_key_exists($optionKeyOffset, $options) && in_array($options[$optionKeyOffset], self::$offsets)) {
-        $classes[] = 'offset-'.$base.'-'.$options[$optionKeyOffset];
+      if(in_array(current($options), self::$offsets, true)) {
+        $offset = current($options);
+
+        if(current($options) !== '') {
+          $cellClass[] = 'offset'.$base.'-'.$offset;
+        }
+
+        next($options);
       }
 
-      if(array_key_exists($optionKeyOrder, $options) && in_array($options[$optionKeyOrder], self::$orders)) {
-        if($options[$optionKeyOrder] === 'f') {
-          $classes[] = 'order-'.$base.'-last';
+      if(in_array(current($options), self::$orders, true)) {
+        $order = current($options);
+
+        if($order === 'f') {
+          $cellClass[] = 'order'.$base.'-last';
         }
-        else if($options[(1 + $position)] === 'l') {
-          $classes[] = 'order-'.$base.'-last';
+        else if($order === 'l') {
+          $cellClass[] = 'order'.$base.'-last';
         }
         else {
-          $classes[] = 'order-'.$base.'-'.$options[$optionKeyOrder];
+          $cellClass[] = 'order'.$base.'-'.$order;
         }
+
+        next($options);
       }
+
+      $class[] = implode(' ', $cellClass);
     }
 
-    return $classes;
+    return $class;
   }
 
-  protected static function getClasses($classes)
+  protected static function makeClass($class)
   {
-    $columns = explode(':', $classes);
-    $classes = [];
+    $cells = explode(':', $class);
+    $class = [];
 
-    foreach($columns as $key => $column) {
-      $classes[] = str_replace(',', ' ', $column);
+    foreach($cells as $cell) {
+      if($cell !== '') {
+        $class[] = str_replace(',', ' ', $cell);
+      }
     }
 
-    return $classes;
+    return $class;
   }
 }
