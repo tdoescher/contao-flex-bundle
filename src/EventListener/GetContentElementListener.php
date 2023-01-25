@@ -84,8 +84,10 @@ class GetContentElementListener
       }
     }
 
-    if(count($class) === 0 && $box['bootstrap']) {
-      $class[] = 'col';
+    if($box['bootstrap']) {
+      if(count($class) === 0 || $class[0] === null) {
+        $class[] = 'col';
+      }
     }
 
     if(!$box['bootstrap']) {
@@ -98,6 +100,6 @@ class GetContentElementListener
       $class[] = ($box['repeat']) ? $box['class'][$position % count($box['class'])] : $box['class'][$position];
     }
 
-    return implode(' ', $class);
+    return trim(implode(' ', $class));
   }
 }
