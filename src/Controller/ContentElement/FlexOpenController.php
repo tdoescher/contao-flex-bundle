@@ -75,25 +75,25 @@ class FlexOpenController extends AbstractContentElementController
 
     $segmentation = [];
     if($model->flex_sm) {
-      $segmentation['sm'] = self::makeSegmantationClass($model->flex_sm, 'sm', $model->flex_bootstrap);
+      $segmentation['sm'] = self::makeSegmantationClasses($model->flex_sm, 'sm', $model->flex_bootstrap);
     }
     if($model->flex_md) {
-      $segmentation['md'] = self::makeSegmantationClass($model->flex_md, 'md', $model->flex_bootstrap);
+      $segmentation['md'] = self::makeSegmantationClasses($model->flex_md, 'md', $model->flex_bootstrap);
     }
     if($model->flex_xs) {
-      $segmentation['xs'] = self::makeSegmantationClass($model->flex_xs, 'xs', $model->flex_bootstrap);
+      $segmentation['xs'] = self::makeSegmantationClasses($model->flex_xs, 'xs', $model->flex_bootstrap);
     }
     if($model->flex_lg) {
-       $segmentation['lg'] = self::makeSegmantationClass($model->flex_lg, 'lg', $model->flex_bootstrap);
+       $segmentation['lg'] = self::makeSegmantationClasses($model->flex_lg, 'lg', $model->flex_bootstrap);
     }
     if($model->flex_xl) {
-      $segmentation['xl'] = self::makeSegmantationClass($model->flex_xl, 'xl', $model->flex_bootstrap);
+      $segmentation['xl'] = self::makeSegmantationClasses($model->flex_xl, 'xl', $model->flex_bootstrap);
     }
     if($model->flex_xxl) {
-      $segmentation['xxl'] = self::makeSegmantationClass($model->flex_xxl, 'xxl', $model->flex_bootstrap);
+      $segmentation['xxl'] = self::makeSegmantationClasses($model->flex_xxl, 'xxl', $model->flex_bootstrap);
     }
 
-    $cellClass = self::makeClass($model->flex_class);
+    $cellClass = self::makeClasses($model->flex_class);
 
     if(!isset($GLOBALS['TL_FLEX'][$root])) {
       $GLOBALS['TL_FLEX'][$root] = [];
@@ -135,11 +135,11 @@ class FlexOpenController extends AbstractContentElementController
     return $template->getResponse();
   }
 
-  protected static function makeSegmantationClass($segmentation, $base, $bootstrap)
+  protected static function makeSegmantationClasses($segmentation, $base, $bootstrap)
   {
     $cells = explode(':', $segmentation);
     $class = [];
- 
+
     $prefix = $bootstrap ? 'col' : 'cell';
     $base = ($base !== 'xs') ? '-'.$base : null;
 
@@ -206,21 +206,19 @@ class FlexOpenController extends AbstractContentElementController
         next($options);
       }
 
-      $class[] = implode(' ', $cellClass);
+      $class[] = (count($cellClass)) ? implode(' ', $cellClass) : null;
     }
 
     return $class;
   }
 
-  protected static function makeClass($class)
+  protected static function makeClasses($class)
   {
     $cells = explode(':', $class);
     $class = [];
 
     foreach($cells as $cell) {
-      if($cell !== '') {
-        $class[] = str_replace(',', ' ', $cell);
-      }
+      $class[] = ($cell !== '') ? str_replace(',', ' ', $cell) : null;
     }
 
     return $class;
