@@ -1,24 +1,24 @@
 {
-    "name": "tdoescher/flex-bundle",
-    "description": "Flexbox System basierend auf den Bootstrap CSS-Klassen",
-    "type": "contao-module",
-    "license": "LGPL-3.0-or-later",
-    "authors": [
-        {
-            "name": "Torben Döscher",
-            "homepage": "https://tdoescher.de"
-        }
-    ],
-    "require": {
-        "php": ">=8.0",
-        "contao/core-bundle": "^4.13 || ^5.0"
-    },
-    "extra": {
-        "contao-manager-plugin": "tdoescher\\FlexBundle\\ContaoManager\\Plugin"
-    },
-    "autoload": {
-        "psr-4": {
-            "tdoescher\\FlexBundle\\": "src/"
-        }
+  "name": "tdoescher/flex-bundle",
+  "description": "Flexbox System basierend auf den Bootstrap CSS-Klassen",
+  "type": "contao-module",
+  "license": "LGPL-3.0-or-later",
+  "authors": [
+    {
+      "name": "Torben Döscher",
+      "homepage": "https://tdoescher.de"
     }
+  ],
+  "require": {
+    "php": ">=8.0",
+    "contao/core-bundle": "^4.13 || ^5.0"
+  },
+  "extra": {
+    "contao-manager-plugin": "tdoescher\\FlexBundle\\ContaoManager\\Plugin"
+  },
+  "autoload": {
+    "psr-4": {
+      "tdoescher\\FlexBundle\\": "src/"
+    }
+  }
 }
