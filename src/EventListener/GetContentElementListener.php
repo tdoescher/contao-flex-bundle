@@ -79,8 +79,11 @@ class GetContentElementListener
 
     if(count($box['segmentation']) && $box['bootstrap']) {
       foreach($box['segmentation'] as $key => $column) {
-        $position = $box['position'] - 1;
-        $class[] = ($box['repeat']) ? $column[$position % count($column)] : $column[$position];
+        $position = ($box['repeat']) ? ($box['position'] - 1) % count($column) : $box['position'] - 1;
+
+        if(isset($column[$position])) {
+          $class[] = $column[$position];
+        }
       }
     }
 
@@ -95,9 +98,12 @@ class GetContentElementListener
       $class[] = 'cell-'.$box['position'];
     }
 
-    if(count($box['class'])) {
-      $position = $box['position'] - 1;
-      $class[] = ($box['repeat']) ? $box['class'][$position % count($box['class'])] : $box['class'][$position];
+    if(count($box['class']) && $box['class'][0] !== '') {
+      $position = ($box['repeat']) ? ($box['position'] - 1) % count($box['class']) : $box['position'] - 1;
+
+      if(isset($box['class'][$position])) {
+        $class[] = $box['class'][$position];
+      }
     }
 
     return trim(implode(' ', $class));
