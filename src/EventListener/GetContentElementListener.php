@@ -32,7 +32,11 @@ class GetContentElementListener
       return $buffer;
     }
 
-    $root = $contentModel->ptable.'.'.$contentModel->pid;
+    if($contentModel->type === 'flex') {
+      $root = 'tl_content.'.$contentModel->id;
+    } else {
+      $root = $contentModel->ptable.'.'.$contentModel->pid;
+    }
 
     if(!isset($GLOBALS['TL_FLEX'][$root])) {
       $GLOBALS['TL_FLEX'][$root] = [];
@@ -46,16 +50,16 @@ class GetContentElementListener
     $parentKey = prev($keys);
     $parent = $parentKey ? $GLOBALS['TL_FLEX'][$root][$parentKey] : 0;
 
-    if(!in_array($contentModel->type, ['flex_open', 'flex_close', 'flex_div_open', 'flex_div_close']) && $buffer != "") {
-      if($currentKey && $current['type'] === 'flex_open') {
+    if(!in_array($contentModel->type, ['flex', 'flex_open', 'flex_close', 'flex_div_open', 'flex_div_close']) && $buffer != "") {
+      if($currentKey && in_array($current['type'], ['flex', 'flex_open'])) {
         $GLOBALS['TL_FLEX'][$root][$currentKey]['position']++;
 
         return '<div class="'.self::getClass($GLOBALS['TL_FLEX'][$root][$currentKey]).'">'.$buffer.'</div>';
       }
     }
 
-    if(in_array($contentModel->type, ['flex_open', 'flex_div_open'])) {
-      if($parentKey && $parent['type'] === 'flex_open') {
+    if(in_array($contentModel->type, ['flex', 'flex_open', 'flex_div_open'])) {
+      if($parentKey && in_array($parent['type'], ['flex', 'flex_open'])) {
         $GLOBALS['TL_FLEX'][$root][$parentKey]['position']++;
 
         return '<div class="'.self::getClass($GLOBALS['TL_FLEX'][$root][$parentKey]).'">'.$buffer;
