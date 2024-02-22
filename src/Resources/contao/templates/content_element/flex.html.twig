@@ -1,0 +1,18 @@
+{% extends "@Contao/content_element/_base.html.twig" %}
+
+{% block wrapper %}
+  {% if backendWildcard %}
+    <div class="tl_gray">
+      <span class="upper">{{backendWildcard|raw}}</span>
+    </div>
+  {% endif %}
+  <{% block wrapper_tag %}div{% endblock %}{% block attributes %}{{ attributes }}{% endblock %}>
+    {%- block inner %}
+      <div{{ attrs(containerClass|default).addClass('row') }}>
+        {% for fragment in nested_fragments %}
+          {{ content_element(fragment) }}
+        {% endfor %}
+      </div>
+    {% endblock -%}
+  </{{ block('wrapper_tag') }}>
+{% endblock %}

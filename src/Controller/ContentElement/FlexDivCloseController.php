@@ -12,15 +12,15 @@
 namespace tdoescher\FlexBundle\Controller\ContentElement;
 
 use Contao\BackendTemplate;
+use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
-use Contao\ContentModel;
 use Contao\System;
 use Contao\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-#[AsContentElement(category:'flex')]
+#[AsContentElement(category:'legacy')]
 class FlexDivCloseController extends AbstractContentElementController
 {
   protected function getResponse(Template $template, ContentModel $model, Request $request): Response

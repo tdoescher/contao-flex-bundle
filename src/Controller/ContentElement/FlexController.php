@@ -11,17 +11,16 @@
  
 namespace tdoescher\FlexBundle\Controller\ContentElement;
 
-use Contao\BackendTemplate;
 use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
+use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\System;
-use Contao\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-#[AsContentElement(category: 'legacy')]
-class FlexOpenController extends AbstractContentElementController
+#[AsContentElement(category: 'miscellaneous', nestedFragments: true)]
+class FlexController extends AbstractContentElementController
 {
   protected static $displays = ['h', 'hidden', 's', 'show'];
 
@@ -31,11 +30,9 @@ class FlexOpenController extends AbstractContentElementController
 
   protected static $orders = ['f', 'first', 'l', 'last', '0', '1', '2', '3', '4', '5'];
 
-  protected function getResponse(Template $template, ContentModel $model, Request $request): Response
+  protected function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
   {
     if(System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request)) {
-      $template = new BackendTemplate('be_wildcard');
-
       $wildcard = [];
       if($model->flex_xs) {
         $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_xs'][0].':</strong> '.$model->flex_xs;
@@ -64,13 +61,11 @@ class FlexOpenController extends AbstractContentElementController
       if(unserialize($model->cssID)[1]) {
         $wildcard[] = '<strong>'.$GLOBALS['TL_LANG']['tl_content']['flex_main_class'].':</strong> '.unserialize($model->cssID)[1];
       }
- 
-      $template->wildcard = implode(' - ', $wildcard);
 
-      return $template->getResponse();
+      $template->backendWildcard = implode(' - ', $wildcard);
     }
 
-    $root = $template->ptable.'.'.$template->pid;
+    $root = 'tl_content.'.$model->id;
 
     $segmentation = [];
     if($model->flex_sm) {
@@ -129,7 +124,6 @@ class FlexOpenController extends AbstractContentElementController
     }
 
     $template->containerClass = implode(' ', $containerClass);
-    $template->cssID = $template->cssID ?: ' id="flex-'.$model->id.'"';
 
     return $template->getResponse();
   }
