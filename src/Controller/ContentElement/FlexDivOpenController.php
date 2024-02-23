@@ -12,15 +12,15 @@
 namespace tdoescher\FlexBundle\Controller\ContentElement;
 
 use Contao\BackendTemplate;
+use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
-use Contao\ContentModel;
 use Contao\System;
 use Contao\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-#[AsContentElement(category:'flex')]
+#[AsContentElement(category:'legacy')]
 class FlexDivOpenController extends AbstractContentElementController
 {
   protected function getResponse(Template $template, ContentModel $model, Request $request): Response
@@ -35,13 +35,19 @@ class FlexDivOpenController extends AbstractContentElementController
 
     $root = $model->ptable.'.'.$model->pid;
 
-    if(!isset($GLOBALS['TL_FLEX'][$root])) {
-      $GLOBALS['TL_FLEX'][$root] = [];
+    if(!isset($GLOBALS['TL_FLEX_LEGACY'])) {
+      $GLOBALS['TL_FLEX_LEGACY'] = [];
     }
 
-    $key = count($GLOBALS['TL_FLEX'][$root]) + 1;
+    if(!isset($GLOBALS['TL_FLEX_LEGACY'][$root])) {
+      $GLOBALS['TL_FLEX_LEGACY'][$root] = [];
+    }
 
-    $GLOBALS['TL_FLEX'][$root][$key] = ['type' => $model->type];
+    $key = count($GLOBALS['TL_FLEX_LEGACY'][$root]) + 1;
+
+    $GLOBALS['TL_FLEX_LEGACY'][$root][$key] = [
+      'type' => $model->type
+    ];
 
     return $template->getResponse();
   }
