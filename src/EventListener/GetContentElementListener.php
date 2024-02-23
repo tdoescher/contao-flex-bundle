@@ -30,6 +30,35 @@ class GetContentElementListener
   {
     $legacy = $contentModel->type !== 'flex' && $contentModel->ptable !== 'tl_content';
 
+    if(!$legacy)
+    {
+      if(!isset($GLOBALS['TL_FLEX']) || !count($GLOBALS['TL_FLEX'])) {
+        return $buffer;
+      }
+
+      if($contentModel->type === 'flex') {
+        $root = 'tl_content.'.$contentModel->id;
+      } else {
+        $root = $contentModel->ptable.'.'.$contentModel->pid;
+      }
+
+      if(!isset($GLOBALS['TL_FLEX'][$root])) {
+        return $buffer;
+      }
+
+      if($contentModel->type !== 'flex') {
+        $GLOBALS['TL_FLEX'][$root]['position']++;
+        $buffer = '<div class="'.self::getClass($GLOBALS['TL_FLEX'][$root]).'">'.$buffer.'</div>';
+      }
+
+      if($contentModel->type === 'flex' && in_array($GLOBALS['TL_FLEX'][$root]['parent'], array_keys($GLOBALS['TL_FLEX']))) {
+        $parentKey = $GLOBALS['TL_FLEX'][$root]['parent'];
+
+        $GLOBALS['TL_FLEX'][$parentKey]['position']++;
+        $buffer = '<div class="'.self::getClass($GLOBALS['TL_FLEX'][$parentKey]).'">'.$buffer.'</div>';
+      }
+    }
+
     if($legacy)
     {
       if(!isset($GLOBALS['TL_FLEX_LEGACY']) || !count($GLOBALS['TL_FLEX_LEGACY'])) {
@@ -57,6 +86,7 @@ class GetContentElementListener
           return '<div class="'.self::getClass($GLOBALS['TL_FLEX_LEGACY'][$root][$currentKey]).'">'.$buffer.'</div>';
         }
       }
+
       if(in_array($contentModel->type, ['flex_open', 'flex_div_open'])) {
         if($parentKey && $parent['type'] === 'flex_open') {
           $GLOBALS['TL_FLEX_LEGACY'][$root][$parentKey]['position']++;
@@ -64,6 +94,7 @@ class GetContentElementListener
           return '<div class="'.self::getClass($GLOBALS['TL_FLEX_LEGACY'][$root][$parentKey]).'">'.$buffer;
         }
       }
+
       if(in_array($contentModel->type, ['flex_close', 'flex_div_close'])) {
         unset($GLOBALS['TL_FLEX_LEGACY'][$root][$currentKey]);
 
@@ -71,34 +102,6 @@ class GetContentElementListener
           return $buffer.'</div>';
         }
       }
-
-      return $buffer;
-    }
-
-    if(!isset($GLOBALS['TL_FLEX']) || !count($GLOBALS['TL_FLEX'])) {
-      return $buffer;
-    }
-
-    if($contentModel->type === 'flex') {
-      $root = 'tl_content.'.$contentModel->id;
-    } else {
-      $root = $contentModel->ptable.'.'.$contentModel->pid;
-    }
-
-    if(!isset($GLOBALS['TL_FLEX'][$root])) {
-      return $buffer;
-    }
-
-    if($contentModel->type !== 'flex') {
-      $GLOBALS['TL_FLEX'][$root]['position']++;
-      $buffer = '<div class="'.self::getClass($GLOBALS['TL_FLEX'][$root]).'">'.$buffer.'</div>';
-    }
-
-    if($contentModel->type === 'flex' && $GLOBALS['TL_FLEX'][$root]['parent']) {
-      $parentKey = $GLOBALS['TL_FLEX'][$root]['parent'];
-
-      $GLOBALS['TL_FLEX'][$parentKey]['position']++;
-      $buffer = '<div class="'.self::getClass($GLOBALS['TL_FLEX'][$parentKey]).'">'.$buffer.'</div>';
     }
 
     return $buffer;

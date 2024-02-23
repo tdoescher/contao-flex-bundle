@@ -93,16 +93,10 @@ class FlexController extends AbstractContentElementController
       $GLOBALS['TL_FLEX'] = [];
     }
 
-    if(count($GLOBALS['TL_FLEX']) && $model->ptable === 'tl_content') {
-      $parent = array_key_last($GLOBALS['TL_FLEX']);
-    } else {
-      $parent = false;
-    }
-
     $GLOBALS['TL_FLEX'][$root] = [
       'type' => $model->type,
       'position' => 0,
-      'parent' => $parent,
+      'parent' => $model->ptable.'.'.$model->pid,
       'bootstrap' => $model->flex_bootstrap,
       'repeat' => $model->flex_repeat,
       'segmentation' => $segmentation,
