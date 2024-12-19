@@ -25,6 +25,7 @@ $GLOBALS['TL_LANG']['tl_content']['flex_justify_options'] = ['normal' => '-', 's
 $GLOBALS['TL_LANG']['tl_content']['flex_align'] = ['Ausrichtung vertikal', 'Wie sollen die Elemente vertikal ausgerichtet werden?'];
 $GLOBALS['TL_LANG']['tl_content']['flex_align_options'] = ['normal' => '-', 'start' => 'flex-start', 'end' => 'flex-end', 'center' => 'center', 'baseline' => 'baseline', 'stretch' => 'stretch'];
 $GLOBALS['TL_LANG']['tl_content']['flex_gutter'] = ['Spaltenabstand', 'Abstand zwischen den spalten. Standard: 1.5rem'];
-$GLOBALS['TL_LANG']['tl_content']['flex_gutter_options'] = ['0' => '0', '1' => '0.25rem', '2' => '0.5rem', '3' => '1rem', '4' => '1.5rem', '5' => '3rem'];
+$GLOBALS['TL_LANG']['tl_content']['flex_gutter_y'] = ['Zeilenabstand', 'Abstand zwischen den Zeilen.'];
+$GLOBALS['TL_LANG']['tl_content']['flex_gutter_options'] = ['d' => 'standard', '0' => '0', '1' => '0.25rem', '2' => '0.5rem', '3' => '1rem', '4' => '1.5rem', '5' => '3rem'];
 $GLOBALS['TL_LANG']['tl_content']['flex_container_class'] = ['Container Klassen', 'Zuweisung von CSS-Klassen für den Container.'];
 $GLOBALS['TL_LANG']['tl_content']['flex_main_class'] = 'Klassen';

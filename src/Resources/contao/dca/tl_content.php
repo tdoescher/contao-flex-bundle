@@ -9,8 +9,8 @@
  * @copyright   tdoescher.de // WEB & IT <https://tdoescher.de>
  */
 
-$GLOBALS['TL_DCA']['tl_content']['palettes']['flex'] = '{type_legend},type;{flex_legend},flex_xs,flex_sm,flex_md,flex_lg,flex_xl,flex_xxl;{flex_extended_legend},flex_class,flex_repeat,flex_bootstrap,flex_multiline,flex_justify,flex_align,flex_gutter,flex_container_class;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
-$GLOBALS['TL_DCA']['tl_content']['palettes']['flex_open'] = '{type_legend},type;{flex_legend},flex_xs,flex_sm,flex_md,flex_lg,flex_xl,flex_xxl;{flex_extended_legend},flex_class,flex_repeat,flex_bootstrap,flex_multiline,flex_justify,flex_align,flex_gutter,flex_container_class;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['flex'] = '{type_legend},type;{flex_legend},flex_xs,flex_sm,flex_md,flex_lg,flex_xl,flex_xxl;{flex_extended_legend},flex_class,flex_repeat,flex_bootstrap,flex_multiline,flex_justify,flex_align,flex_gutter,flex_gutter_y,flex_container_class;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['flex_open'] = '{type_legend},type;{flex_legend},flex_xs,flex_sm,flex_md,flex_lg,flex_xl,flex_xxl;{flex_extended_legend},flex_class,flex_repeat,flex_bootstrap,flex_multiline,flex_justify,flex_align,flex_gutter,flex_gutter_y,flex_container_class;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['flex_close'] = '{type_legend},type;{protected_legend:hide},protected;{expert_legend:hide},guests;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['flex_div_open'] = '{type_legend},type;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['flex_div_close'] = '{type_legend},type;{protected_legend:hide},protected;{expert_legend:hide},guests;{invisible_legend:hide},invisible,start,stop';
@@ -113,16 +113,26 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['flex_gutter'] = [
   'label'     => &$GLOBALS['TL_LANG']['tl_content']['flex_gutter'],
   'exclude'   => true,
   'inputType' => 'select',
-  'options'   => ['0', '1', '2', '3', '4', '5'],
+  'options'   => ['n', '0', '1', '2', '3', '4', '5'],
   'reference' => &$GLOBALS['TL_LANG']['tl_content']['flex_gutter_options'],
   'eval'      => ['helpwizard' => false, 'chosen' => false, 'tl_class' => 'clr w50'],
-  'sql'       => "varchar(1) NOT NULL default '4'"
+  'sql'       => "varchar(1) NOT NULL default 'd'"
+];
+
+$GLOBALS['TL_DCA']['tl_content']['fields']['flex_gutter_y'] = [
+  'label'     => &$GLOBALS['TL_LANG']['tl_content']['flex_gutter_y'],
+  'exclude'   => true,
+  'inputType' => 'select',
+  'options'   => ['n', '0', '1', '2', '3', '4', '5'],
+  'reference' => &$GLOBALS['TL_LANG']['tl_content']['flex_gutter_y_options'],
+  'eval'      => ['helpwizard' => false, 'chosen' => false, 'tl_class' => 'w50'],
+  'sql'       => "varchar(1) NOT NULL default 'd'"
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['flex_container_class'] = [
   'label'     => &$GLOBALS['TL_LANG']['tl_content']['flex_container_class'],
   'exclude'   => true,
   'inputType' => 'text',
-  'eval'      => ['maxlength' => '255', 'tl_class' => 'w50'],
+  'eval'      => ['maxlength' => '255', 'tl_class' => 'clr'],
   'sql'       => "varchar(255) NOT NULL default ''"
 ];
