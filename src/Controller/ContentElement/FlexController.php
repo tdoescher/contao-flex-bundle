@@ -114,16 +114,13 @@ class FlexController extends AbstractContentElementController
       $containerClass[] = 'align-items-'.$model->flex_align;
     }
 
-    if($model->flex_gutter === $model->flex_gutter_y && $model->flex_gutter != 'd') {
-      if(in_array($model->flex_gutter, ['0', '1', '2', '3', '4', '5'])) {
-        $containerClass[] = 'g-'.$model->flex_gutter;
-      }
+    if($model->flex_gutter === $model->flex_gutter_y && in_array($model->flex_gutter, ['0', '1', '2', '3', '4', '5'])) {
+      $containerClass[] = 'g-'.$model->flex_gutter;
     }
-    elseif($model->flex_gutter != 'd') {
+    else {
       if(in_array($model->flex_gutter, ['0', '1', '2', '3', '4', '5'])) {
         $containerClass[] = 'gx-'.$model->flex_gutter;
       }
-      
       if(in_array($model->flex_gutter_y, ['0', '1', '2', '3', '4', '5'])) {
         $containerClass[] = 'gy-'.$model->flex_gutter_y;
       }
