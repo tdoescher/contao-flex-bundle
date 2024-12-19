@@ -113,7 +113,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['flex_gutter'] = [
   'label'     => &$GLOBALS['TL_LANG']['tl_content']['flex_gutter'],
   'exclude'   => true,
   'inputType' => 'select',
-  'options'   => ['n', '0', '1', '2', '3', '4', '5'],
+  'options'   => ['d', '0', '1', '2', '3', '4', '5'],
   'reference' => &$GLOBALS['TL_LANG']['tl_content']['flex_gutter_options'],
   'eval'      => ['helpwizard' => false, 'chosen' => false, 'tl_class' => 'clr w50'],
   'sql'       => "varchar(1) NOT NULL default 'd'"
@@ -123,8 +123,8 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['flex_gutter_y'] = [
   'label'     => &$GLOBALS['TL_LANG']['tl_content']['flex_gutter_y'],
   'exclude'   => true,
   'inputType' => 'select',
-  'options'   => ['n', '0', '1', '2', '3', '4', '5'],
-  'reference' => &$GLOBALS['TL_LANG']['tl_content']['flex_gutter_y_options'],
+  'options'   => ['d', '0', '1', '2', '3', '4', '5'],
+  'reference' => &$GLOBALS['TL_LANG']['tl_content']['flex_gutter_options'],
   'eval'      => ['helpwizard' => false, 'chosen' => false, 'tl_class' => 'w50'],
   'sql'       => "varchar(1) NOT NULL default 'd'"
 ];
