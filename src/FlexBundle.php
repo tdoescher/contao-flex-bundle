@@ -8,7 +8,7 @@
  * @license     LGPL
  * @copyright   tdoescher.de // WEB & IT <https://tdoescher.de>
  */
- 
+
 namespace tdoescher\FlexBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;

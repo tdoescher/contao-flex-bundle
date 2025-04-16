@@ -17,16 +17,16 @@ use Contao\Widget;
 #[AsHook('addCustomRegexp', priority: 100)]
 class AddCustomRegexpListener
 {
-  public function __invoke(string $regexp, $input, Widget $widget): bool
-  {
-    if($regexp !== 'flex') {
-      return false;
-    }
+    public function __invoke(string $regexp, $input, Widget $widget): bool
+    {
+        if ($regexp !== 'flex') {
+            return false;
+        }
 
-    if(!preg_match('/^[,:\-0-9a-z]*$/', $input)) {
-      $widget->addError($widget->label.' is not valid.');
-    }
+        if (!preg_match('/^[,:\-0-9a-z]*$/', $input)) {
+            $widget->addError($widget->label . ' is not valid.');
+        }
 
-    return true;
-  }
+        return true;
+    }
 }

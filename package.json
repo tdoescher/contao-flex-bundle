@@ -1,6 +1,6 @@
 {
   "author": "Torben Döscher <mail@tdoescher.de>",
-  "description": "Flexbox System basierend auf den Bootstrap CSS-Klassen",
+  "description": "Flexbox-/Grid-Layout System (kompatibel mit Bootstrap)",
   "type": "module",
   "license": "LGPL-3.0-or-later",
   "repository": {

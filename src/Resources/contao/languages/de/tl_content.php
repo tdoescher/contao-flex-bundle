@@ -11,7 +11,8 @@
 
 $GLOBALS['TL_LANG']['tl_content']['flex_legend'] = 'Flex';
 $GLOBALS['TL_LANG']['tl_content']['flex_repeat'] = ['Wiederholen', 'Soll die Aufteilung wiederholt werden?'];
-$GLOBALS['TL_LANG']['tl_content']['flex_bootstrap'] = ['Bootstrap', 'Sollen die Bootstrap Klassen gesetzt werden?'];
+$GLOBALS['TL_LANG']['tl_content']['flex_bootstrap'] = ['Framework', 'Welches CSS-Framework/-Klassen sollen gesetzt werden?'];
+$GLOBALS['TL_LANG']['tl_content']['flex_bootstrap_options'] = ['0' => 'ohne', '1' => 'Flexbox (Bootstrap)', '2' => 'Grid'];
 $GLOBALS['TL_LANG']['tl_content']['flex_extended_legend'] = 'Flex erweitert';
 $GLOBALS['TL_LANG']['tl_content']['flex_xs'] = ['kleiner als Smartphone (xs, kleiner als 576px)', 'Bsp.: "12" für eine Spalten über 100%'];
 $GLOBALS['TL_LANG']['tl_content']['flex_sm'] = ['Smartphone oder größer (sm, 576px)', 'Bsp.: "3:9" für zwei Spalten 25% / 75%'];

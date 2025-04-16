@@ -19,11 +19,11 @@ use tdoescher\FlexBundle\FlexBundle;
 
 class Plugin implements BundlePluginInterface
 {
-  public function getBundles(ParserInterface $parser): array
-  {
-    return [
-      BundleConfig::create(FlexBundle::class)
-        ->setLoadAfter([ContaoCoreBundle::class]),
-    ];
-  }
+    public function getBundles(ParserInterface $parser): array
+    {
+        return [
+            BundleConfig::create(FlexBundle::class)
+                ->setLoadAfter([ContaoCoreBundle::class]),
+        ];
+    }
 }
