@@ -1,0 +1,52 @@
+$flex-breakpoints: (sm: 576px, md: 768px, lg: 992px, xl: 1200px, xxl: 1400px);
+$flex-spacings: (0: 0, 1: 0.25rem, 2: 0.5rem, 3: 1rem, 4: 1.5rem, 5: 3rem);
+$flex-columns: 12;
+$flex-orders: (first: -1, 0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, last: 6);
+$flex-justify: start, end, center, space-around, space-between, space-evenly;
+$flex-align: start, end, center, baseline, stretch;
+$flex-self: auto, start, end, center, baseline, stretch;
+$flex-display: inline, inline-block, block, grid, flex, none;
+
+.content-flex { container-type: inline-size; --flex-gap-x: 1.5rem; --flex-gap-y: 1.5rem;
+  > .row { display: flex; flex-wrap: wrap; margin-inline: calc(var(--flex-gap-x) / -2); margin-block: calc(var(--flex-gap-y) / -2); justify-content: var(--flex-justify, normal); align-items: var(--flex-items, normal); }
+  > .row > * { flex: var(--flex-flex, 0 0 auto); order: var(--flex-order, 0); align-self: var(--flex-self); width: var(--flex-width, calc(100% / $flex-columns * var(--flex-span, 100))); max-width: 100%; margin-inline-start: calc(100% / $flex-columns * var(--flex-offset, 0)); padding-inline: calc(var(--flex-gap-x) / 2); padding-block: calc(var(--flex-gap-y) / 2); box-sizing: border-box; }
+}
+
+@mixin flex-generate($modifier: "") {
+  .col#{$modifier} { --flex-flex: 1 0 0; --flex-width: 100%; }
+  .col#{$modifier}-auto { --flex-width: auto; }
+  @for $index from 1 through $flex-columns {
+    .col#{$modifier}-#{$index} { --flex-span: #{$index}; }
+  }
+  @each $key, $value in $flex-spacings {
+    .g#{$modifier}-#{$key} { --flex-gap-x: #{$value}; --flex-gap-y: #{$value}; }
+    .gx#{$modifier}-#{$key} { --flex-gap-x: #{$value}; }
+    .gy#{$modifier}-#{$key} { --flex-gap-y: #{$value}; }
+  }
+  @for $index from 0 through $flex-columns {
+    .offset#{$modifier}-#{$index} { --flex-offset: #{$index}; }
+  }
+  @each $key, $value in $flex-orders {
+    .order#{$modifier}-#{$key} { --flex-order: #{$value}; }
+  }
+  @each $value in $flex-justify {
+    .justify-content#{$modifier}-#{$value} { --flex-justify: #{$value}; }
+  }
+  @each $value in $flex-align {
+    .align-items#{$modifier}-#{$value} { --flex-items: #{$value}; }
+  }
+  @each $value in $flex-self {
+    .align-self#{$modifier}-#{$value} { --flex-self: #{$value}; }
+  }
+  @each $value in $flex-display {
+    .d#{$modifier}-#{$value} { display: $value !important; }
+  }
+}
+
+@include flex-generate();
+
+@each $modifier, $breakpoint in $flex-breakpoints {
+  @container (width >= #{$breakpoint}) {
+    @include flex-generate("-" + $modifier);
+  }
+}
