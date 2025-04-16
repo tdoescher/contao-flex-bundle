@@ -1,0 +1,17 @@
+{
+  "author": "Torben Döscher <mail@tdoescher.de>",
+  "description": "Flexbox System basierend auf den Bootstrap CSS-Klassen",
+  "type": "module",
+  "license": "LGPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tdoescher/contao-cokiban-bundle.git"
+  },
+  "scripts": {
+    "build": "gulp build"
+  },
+  "devDependencies": {
+    "gulp": "^5.0.0",
+    "gulp-esbuild": "^0.12.1"
+  }
+}

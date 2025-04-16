@@ -1,0 +1,57 @@
+$grid-breakpoints: (sm: 576px, md: 768px, lg: 992px, xl: 1200px, xxl: 1400px);
+$grid-spacings: (0: 0, 1: 0.25rem, 2: 0.5rem, 3: 1rem, 4: 1.5rem, 5: 3rem);
+$grid-columns: 12;
+$grid-orders: (first: -1, 0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, last: 6);
+$grid-justify: start, end, center, space-around, space-between, space-evenly;
+$grid-align: start, end, center, baseline, stretch;
+$grid-self: auto, start, end, center, baseline, stretch;
+$grid-display: inline, inline-block, block, grid, flex, none;
+
+.content-grid { container-type: inline-size;
+  > .row { display: grid; gap: var(--grid-gap-x, 1.5rem) var(--grid-gap-y, 1.5rem); grid-template-columns: repeat(12, 1fr); justify-content: var(--grid-justify, normal); align-items: var(--grid-items, normal); }
+  > .row > * { grid-column: var(--grid-offset, auto) / span var(--grid-span, 2); order: var(--grid-order, 0); align-self: var(--grid-self); }
+}
+
+.content-flex { container-type: inline-size; --grid-gap-x: 1.5rem; --grid-gap-y: 1.5rem;
+  > .row { display: flex; flex-wrap: wrap; margin-inline: calc(var(--grid-gap-x) / -2); margin-block: calc(var(--grid-gap-y) / -2); justify-content: var(--grid-justify, normal); align-items: var(--grid-items, normal); }
+  > .row > * { flex: var(--grid-flex, 0 0 auto); order: var(--grid-order, 0); align-self: var(--grid-self); width: var(--grid-width, calc(100% / $grid-columns * var(--grid-span, 100))); max-width: 100%; margin-inline-start: calc(100% / $grid-columns * var(--grid-offset, 0)); padding-inline: calc(var(--grid-gap-x) / 2); padding-block: calc(var(--grid-gap-y) / 2); box-sizing: border-box; }
+}
+
+@mixin grid-generate($modifier: "") {
+  .col#{$modifier} { --grid-flex: 1 0 0; --grid-width: 100%; }
+  .col#{$modifier}-auto { --grid-width: auto; }
+  @for $index from 1 through $grid-columns {
+    .col#{$modifier}-#{$index} { --grid-span: #{$index}; }
+  }
+  @each $key, $value in $grid-spacings {
+    .g#{$modifier}-#{$key} { --grid-gap-x: #{$value}; --grid-gap-y: #{$value}; }
+    .gx#{$modifier}-#{$key} { --grid-gap-x: #{$value}; }
+    .gy#{$modifier}-#{$key} { --grid-gap-y: #{$value}; }
+  }
+  @for $index from 0 through $grid-columns {
+    .offset#{$modifier}-#{$index} { --grid-offset: #{$index}; }
+  }
+  @each $key, $value in $grid-orders {
+    .order#{$modifier}-#{$key} { --grid-order: #{$value}; }
+  }
+  @each $value in $grid-justify {
+    .justify-content#{$modifier}-#{$value} { --grid-justify: #{$value}; }
+  }
+  @each $value in $grid-align {
+    .align-items#{$modifier}-#{$value} { --grid-items: #{$value}; }
+  }
+  @each $value in $grid-self {
+    .align-self#{$modifier}-#{$value} { --grid-self: #{$value}; }
+  }
+  @each $value in $grid-display {
+    .d#{$modifier}-#{$value} { display: $value !important; }
+  }
+}
+
+@include grid-generate();
+
+@each $modifier, $breakpoint in $grid-breakpoints {
+  @container (width >= #{$breakpoint}) {
+    @include grid-generate("-" + $modifier);
+  }
+}
