@@ -70,7 +70,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['flex_repeat'] = [
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['flex_bootstrap'] = [
     'exclude' => true,
-    'default' => 2,
+    'default' => 1,
     'inputType' => 'select',
     'options' => ['0', '1', '2'],
     'reference' => &$GLOBALS['TL_LANG']['tl_content']['flex_bootstrap_options'],
