@@ -1,5 +1,6 @@
-$flex-breakpoints: (sm: 576px, md: 768px, lg: 992px, xl: 1200px, xxl: 1400px);
-$flex-spacings: (0: 0, 1: 0.25rem, 2: 0.5rem, 3: 1rem, 4: 1.5rem, 5: 3rem);
+$breakpoints: (sm: 576px, md: 768px, lg: 992px, xl: 1200px, xxl: 1400px);
+$spacings: (0: 0, 1: 0.25rem, 2: 0.5rem, 3: 1rem, 4: 1.5rem, 5: 3rem);
+
 $flex-columns: 12;
 $flex-orders: (first: -1, 0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, last: 6);
 $flex-justify: start, end, center, space-around, space-between, space-evenly;
@@ -7,17 +8,26 @@ $flex-align: start, end, center, baseline, stretch;
 $flex-self: auto, start, end, center, baseline, stretch;
 $flex-display: inline, inline-block, block, grid, flex, none;
 
+.content-flex { container-type: inline-size; --flex-gap-x: 1.5rem; --flex-gap-y: 1.5rem;
+  > .row { display: flex; flex-wrap: wrap; margin-inline: calc(var(--flex-gap-x) / -2); margin-block: calc(var(--flex-gap-y) / -2); justify-content: var(--flex-justify, normal); align-items: var(--flex-items, normal); }
+  > .row > * { flex: var(--flex-flex, 0 0 auto); order: var(--flex-order, 0); align-self: var(--flex-self); width: var(--flex-width, calc(100% / $flex-columns * var(--flex-cols, 100))); max-width: 100%; margin-inline-start: calc(100% / $flex-columns * var(--flex-offset, 0)); padding-inline: calc(var(--flex-gap-x) / 2); padding-block: calc(var(--flex-gap-y) / 2); box-sizing: border-box; }
+  > .grid { display: grid; gap: var(--flex-gap-x, 1.5rem) var(--flex-gap-y, 1.5rem); grid-template-columns: repeat(12, 1fr); justify-content: var(--flex-justify, normal); align-items: var(--flex-items, normal); }
+  > .grid > * { grid-column: var(--flex-offset, auto) / span var(--flex-cols, 12); grid-row: var(--flex-order, auto) / span var(--flex-rows, auto); order: var(--flex-order, 0); align-self: var(--flex-self); }
+}
+
 @mixin flex-generate($modifier: "") {
   .col#{$modifier} { --flex-flex: 1 0 0; --flex-width: 100%; }
   .col#{$modifier}-auto { --flex-width: auto; }
   @for $index from 1 through $flex-columns {
-    .col#{$modifier}-#{$index} { --flex-span: #{$index}; }
+    .col#{$modifier}-#{$index} { --flex-cols: #{$index}; }
+    .row#{$modifier}-#{$index} { --flex-rows: #{$index}; }
   }
-  @each $key, $value in $flex-spacings {
+  @each $key, $value in $spacings {
     .g#{$modifier}-#{$key} { --flex-gap-x: #{$value}; --flex-gap-y: #{$value}; }
     .gx#{$modifier}-#{$key} { --flex-gap-x: #{$value}; }
     .gy#{$modifier}-#{$key} { --flex-gap-y: #{$value}; }
   }
+  .offset#{$modifier}-auto { --flex-offset: auto; }
   @for $index from 0 through $flex-columns {
     .offset#{$modifier}-#{$index} { --flex-offset: #{$index}; }
   }
@@ -37,7 +47,7 @@ $flex-display: inline, inline-block, block, grid, flex, none;
 
 @include flex-generate();
 
-@each $modifier, $breakpoint in $flex-breakpoints {
+@each $modifier, $breakpoint in $breakpoints {
   @container (width >= #{$breakpoint}) {
     @include flex-generate("-" + $modifier);
   }

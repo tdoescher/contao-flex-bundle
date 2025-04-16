@@ -14,42 +14,42 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['flex'] = '{type_legend},type;{flex
 $GLOBALS['TL_DCA']['tl_content']['fields']['flex_xs'] = [
     'exclude' => true,
     'inputType' => 'text',
-    'eval' => ['rgxp' => 'flex', 'tl_class' => 'w50', 'maxlength' => '255'],
+    'eval' => ['rgxp' => 'flex', 'tl_class' => 'w50', 'maxlength' => '255', 'style' => 'font-family: monospace'],
     'sql' => "varchar(255) NOT NULL default ''"
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['flex_sm'] = [
     'exclude' => true,
     'inputType' => 'text',
-    'eval' => ['rgxp' => 'flex', 'tl_class' => 'w50', 'maxlength' => '255'],
+    'eval' => ['rgxp' => 'flex', 'tl_class' => 'w50', 'maxlength' => '255', 'style' => 'font-family: monospace'],
     'sql' => "varchar(255) NOT NULL default ''"
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['flex_md'] = [
     'exclude' => true,
     'inputType' => 'text',
-    'eval' => ['rgxp' => 'flex', 'tl_class' => 'clr w50', 'maxlength' => '255'],
+    'eval' => ['rgxp' => 'flex', 'tl_class' => 'clr w50', 'maxlength' => '255', 'style' => 'font-family: monospace'],
     'sql' => "varchar(255) NOT NULL default ''"
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['flex_lg'] = [
     'exclude' => true,
     'inputType' => 'text',
-    'eval' => ['rgxp' => 'flex', 'tl_class' => 'w50', 'maxlength' => '255'],
+    'eval' => ['rgxp' => 'flex', 'tl_class' => 'w50', 'maxlength' => '255', 'style' => 'font-family: monospace'],
     'sql' => "varchar(255) NOT NULL default ''"
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['flex_xl'] = [
     'exclude' => true,
     'inputType' => 'text',
-    'eval' => ['rgxp' => 'flex', 'tl_class' => 'clr w50', 'maxlength' => '255'],
+    'eval' => ['rgxp' => 'flex', 'tl_class' => 'clr w50', 'maxlength' => '255', 'style' => 'font-family: monospace'],
     'sql' => "varchar(255) NOT NULL default ''"
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['flex_xxl'] = [
     'exclude' => true,
     'inputType' => 'text',
-    'eval' => ['rgxp' => 'flex', 'tl_class' => 'w50', 'maxlength' => '255'],
+    'eval' => ['rgxp' => 'flex', 'tl_class' => 'w50', 'maxlength' => '255', 'style' => 'font-family: monospace'],
     'sql' => "varchar(255) NOT NULL default ''"
 ];
 
@@ -70,7 +70,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['flex_repeat'] = [
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['flex_bootstrap'] = [
     'exclude' => true,
-    'default' => 1,
+    'default' => 2,
     'inputType' => 'select',
     'options' => ['0', '1', '2'],
     'reference' => &$GLOBALS['TL_LANG']['tl_content']['flex_bootstrap_options'],
