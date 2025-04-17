@@ -10,15 +10,15 @@ $flex-display: inline, inline-block, block, grid, flex, none;
 
 .content-flex { container-type: inline-size; --flex-gap-x: 1.5rem; --flex-gap-y: 1.5rem;
   > .row { display: flex; flex-wrap: wrap; margin-inline: calc(var(--flex-gap-x) / -2); margin-block: calc(var(--flex-gap-y) / -2); justify-content: var(--flex-justify, normal); align-items: var(--flex-items, normal); }
-  > .row > * { flex: var(--flex-flex, 0 0 auto); order: var(--flex-order, 0); align-self: var(--flex-self); width: var(--flex-width, calc(100% / $flex-columns * var(--flex-cols, 100))); max-width: 100%; margin-inline-start: calc(100% / $flex-columns * var(--flex-offset, 0)); padding-inline: calc(var(--flex-gap-x) / 2); padding-block: calc(var(--flex-gap-y) / 2); box-sizing: border-box; }
+  > .row > * { flex: var(--flex-flex, 0 0 auto); order: var(--flex-order, 0); align-self: var(--flex-self); width: var(--flex-width, calc(100% / 12 * var(--flex-cols, 100))); max-width: 100%; margin-inline-start: calc(100% / 12 * var(--flex-offset, 0)); padding-inline: calc(var(--flex-gap-x) / 2); padding-block: calc(var(--flex-gap-y) / 2); box-sizing: border-box; }
   > .grid { display: grid; gap: var(--flex-gap-x, 1.5rem) var(--flex-gap-y, 1.5rem); grid-template-columns: repeat(12, 1fr); justify-content: var(--flex-justify, normal); align-items: var(--flex-items, normal); }
-  > .grid > * { grid-column: var(--flex-offset, auto) / span var(--flex-cols, 12); grid-row: var(--flex-order, auto) / span var(--flex-rows, auto); order: var(--flex-order, 0); align-self: var(--flex-self); }
+  > .grid > * { grid-column: var(--flex-offset, auto) / span var(--flex-cols, 12); grid-row: var(--flex-row-offset, auto) / span var(--flex-rows, auto); order: var(--flex-order, 0); align-self: var(--flex-self); }
 }
 
 @mixin flex-generate($modifier: "") {
   .col#{$modifier} { --flex-flex: 1 0 0; --flex-width: 100%; }
   .col#{$modifier}-auto { --flex-width: auto; }
-  @for $index from 1 through $flex-columns {
+  @for $index from 1 through 12 {
     .col#{$modifier}-#{$index} { --flex-cols: #{$index}; }
     .row#{$modifier}-#{$index} { --flex-rows: #{$index}; }
   }
@@ -28,8 +28,10 @@ $flex-display: inline, inline-block, block, grid, flex, none;
     .gy#{$modifier}-#{$key} { --flex-gap-y: #{$value}; }
   }
   .offset#{$modifier}-auto { --flex-offset: auto; }
-  @for $index from 0 through $flex-columns {
+  .row-offset#{$modifier}-auto { --flex-row-offset: auto; }
+  @for $index from 0 through 12 {
     .offset#{$modifier}-#{$index} { --flex-offset: #{$index}; }
+    .row-offset#{$modifier}-#{$index} { --flex-row-offset: #{$index}; }
   }
   @each $key, $value in $flex-orders {
     .order#{$modifier}-#{$key} { --flex-order: #{$value}; }

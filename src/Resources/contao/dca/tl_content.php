@@ -9,60 +9,62 @@
  * @copyright   tdoescher.de // WEB & IT <https://tdoescher.de>
  */
 
+$rgxpFlex = '/^[,:\/0-9a-z\r\n]*$/';
+
 $GLOBALS['TL_DCA']['tl_content']['palettes']['flex'] = '{type_legend},type;{flex_legend},flex_xs,flex_sm,flex_md,flex_lg,flex_xl,flex_xxl;{flex_extended_legend},flex_class,flex_repeat,flex_bootstrap,flex_multiline,flex_justify,flex_align,flex_gutter,flex_gutter_y,flex_container_class;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['flex_xs'] = [
     'exclude' => true,
-    'inputType' => 'text',
-    'eval' => ['rgxp' => 'flex', 'tl_class' => 'w50', 'maxlength' => '255', 'style' => 'font-family: monospace'],
+    'inputType' => 'textarea',
+    'eval' => ['rte' => 'ace', 'rgxp' => 'custom', 'customRgxp' => $rgxpFlex, 'tl_class' => 'w50', 'maxlength' => '255', 'style' => 'font-family: monospace'],
     'sql' => "varchar(255) NOT NULL default ''"
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['flex_sm'] = [
     'exclude' => true,
-    'inputType' => 'text',
-    'eval' => ['rgxp' => 'flex', 'tl_class' => 'w50', 'maxlength' => '255', 'style' => 'font-family: monospace'],
+    'inputType' => 'textarea',
+    'eval' => ['rte' => 'ace', 'rgxp' => 'custom', 'customRgxp' => $rgxpFlex, 'tl_class' => 'w50', 'maxlength' => '255', 'style' => 'font-family: monospace'],
     'sql' => "varchar(255) NOT NULL default ''"
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['flex_md'] = [
     'exclude' => true,
-    'inputType' => 'text',
-    'eval' => ['rgxp' => 'flex', 'tl_class' => 'clr w50', 'maxlength' => '255', 'style' => 'font-family: monospace'],
+    'inputType' => 'textarea',
+    'eval' => ['rte' => 'ace', 'rgxp' => 'custom', 'customRgxp' => $rgxpFlex, 'tl_class' => 'clr w50', 'maxlength' => '255', 'style' => 'font-family: monospace'],
     'sql' => "varchar(255) NOT NULL default ''"
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['flex_lg'] = [
     'exclude' => true,
-    'inputType' => 'text',
-    'eval' => ['rgxp' => 'flex', 'tl_class' => 'w50', 'maxlength' => '255', 'style' => 'font-family: monospace'],
+    'inputType' => 'textarea',
+    'eval' => ['rte' => 'ace', 'rgxp' => 'custom', 'customRgxp' => $rgxpFlex, 'tl_class' => 'w50', 'maxlength' => '255', 'style' => 'font-family: monospace'],
     'sql' => "varchar(255) NOT NULL default ''"
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['flex_xl'] = [
     'exclude' => true,
-    'inputType' => 'text',
-    'eval' => ['rgxp' => 'flex', 'tl_class' => 'clr w50', 'maxlength' => '255', 'style' => 'font-family: monospace'],
+    'inputType' => 'textarea',
+    'eval' => ['rte' => 'ace', 'rgxp' => 'custom', 'customRgxp' => $rgxpFlex, 'tl_class' => 'clr w50', 'maxlength' => '255', 'style' => 'font-family: monospace'],
     'sql' => "varchar(255) NOT NULL default ''"
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['flex_xxl'] = [
     'exclude' => true,
-    'inputType' => 'text',
-    'eval' => ['rgxp' => 'flex', 'tl_class' => 'w50', 'maxlength' => '255', 'style' => 'font-family: monospace'],
+    'inputType' => 'textarea',
+    'eval' => ['rte' => 'ace', 'rgxp' => 'custom', 'customRgxp' => $rgxpFlex, 'tl_class' => 'w50', 'maxlength' => '255', 'style' => 'font-family: monospace'],
     'sql' => "varchar(255) NOT NULL default ''"
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['flex_class'] = [
     'exclude' => true,
     'inputType' => 'text',
-    'eval' => ['rgxp' => 'flex', 'maxlength' => '255'],
+    'eval' => ['maxlength' => '255'],
     'sql' => "varchar(255) NOT NULL default ''"
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['flex_repeat'] = [
     'exclude' => true,
-    'default' => 1,
+    'default' => '1',
     'inputType' => 'checkbox',
     'eval' => ['tl_class' => 'clr w50'],
     'sql' => "char(1) NOT NULL default '1'"
@@ -70,7 +72,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['flex_repeat'] = [
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['flex_bootstrap'] = [
     'exclude' => true,
-    'default' => 2,
+    'default' => '1',
     'inputType' => 'select',
     'options' => ['0', '1', '2'],
     'reference' => &$GLOBALS['TL_LANG']['tl_content']['flex_bootstrap_options'],

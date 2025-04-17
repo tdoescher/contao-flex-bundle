@@ -22,43 +22,15 @@ use Symfony\Component\HttpFoundation\Response;
 #[AsContentElement(category: 'miscellaneous', nestedFragments: true)]
 class FlexController extends AbstractContentElementController
 {
-    protected static array $displays = ['h', 'hide', 'hidden', 's', 'show'];
-
-    protected static array $cols = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', 'a', 'auto', 'n', 'none'];
-
-    protected static array $gridRows = ['', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
-
-    protected static array $offsets = ['', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', 'a', 'auto'];
-
-    protected static array $orders = ['', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', 'a', 'auto', 'f', 'first', 'l', 'last'];
-
     protected function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
         if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request)) {
             $wildcard = [];
-            if ($model->flex_xs) {
-                $wildcard[] = '<strong>' . $GLOBALS['TL_LANG']['tl_content']['flex_xs'][0] . ':</strong> ' . $model->flex_xs;
-            }
-            if ($model->flex_sm) {
-                $wildcard[] = '<strong>' . $GLOBALS['TL_LANG']['tl_content']['flex_sm'][0] . ':</strong> ' . $model->flex_sm;
-            }
-            if ($model->flex_md) {
-                $wildcard[] = '<strong>' . $GLOBALS['TL_LANG']['tl_content']['flex_md'][0] . ':</strong> ' . $model->flex_md;
-            }
-            if ($model->flex_lg) {
-                $wildcard[] = '<strong>' . $GLOBALS['TL_LANG']['tl_content']['flex_lg'][0] . ':</strong> ' . $model->flex_lg;
-            }
-            if ($model->flex_xl) {
-                $wildcard[] = '<strong>' . $GLOBALS['TL_LANG']['tl_content']['flex_xl'][0] . ':</strong> ' . $model->flex_xl;
-            }
-            if ($model->flex_xxl) {
-                $wildcard[] = '<strong>' . $GLOBALS['TL_LANG']['tl_content']['flex_xxl'][0] . ':</strong> ' . $model->flex_xxl;
-            }
-            if ($model->flex_class) {
-                $wildcard[] = '<strong>' . $GLOBALS['TL_LANG']['tl_content']['flex_class'][0] . ':</strong> ' . $model->flex_class;
-            }
-            if ($model->flex_container_class) {
-                $wildcard[] = '<strong>' . $GLOBALS['TL_LANG']['tl_content']['flex_container_class'][0] . ':</strong> ' . $model->flex_container_class;
+
+            foreach (['xs', 'sm', 'md', 'lg', 'xxl', 'class', 'container_class'] as $field) {
+                if ($model->{'flex_' . $field}) {
+                    $wildcard[] = '<strong>' . $GLOBALS['TL_LANG']['tl_content']['flex_' . $field][0] . ':</strong> ' . $model->{'flex_' . $field};
+                }
             }
             if (unserialize($model->cssID)[1]) {
                 $wildcard[] = '<strong>' . $GLOBALS['TL_LANG']['tl_content']['flex_main_class'] . ':</strong> ' . unserialize($model->cssID)[1];
@@ -67,26 +39,11 @@ class FlexController extends AbstractContentElementController
             $template->wildcard = implode(' - ', $wildcard);
         }
 
-        $root = 'tl_content.' . $model->id;
-
         $segmentation = [];
-        if ($model->flex_sm) {
-            $segmentation['sm'] = self::makeSegmantation($model->flex_sm, 'sm', $model->flex_bootstrap);
-        }
-        if ($model->flex_md) {
-            $segmentation['md'] = self::makeSegmantation($model->flex_md, 'md', $model->flex_bootstrap);
-        }
-        if ($model->flex_xs) {
-            $segmentation['xs'] = self::makeSegmantation($model->flex_xs, 'xs', $model->flex_bootstrap);
-        }
-        if ($model->flex_lg) {
-            $segmentation['lg'] = self::makeSegmantation($model->flex_lg, 'lg', $model->flex_bootstrap);
-        }
-        if ($model->flex_xl) {
-            $segmentation['xl'] = self::makeSegmantation($model->flex_xl, 'xl', $model->flex_bootstrap);
-        }
-        if ($model->flex_xxl) {
-            $segmentation['xxl'] = self::makeSegmantation($model->flex_xxl, 'xxl', $model->flex_bootstrap);
+        foreach (['xs', 'sm', 'md', 'lg', 'xxl'] as $field) {
+            if ($model->{'flex_' . $field}) {
+                $segmentation[$field] = self::makeSegmantation($model->{'flex_' . $field}, $field, $model->flex_bootstrap);
+            }
         }
 
         $cellClass = self::makeClasses($model->flex_class);
@@ -95,7 +52,7 @@ class FlexController extends AbstractContentElementController
             $GLOBALS['TL_FLEX'] = [];
         }
 
-        $GLOBALS['TL_FLEX'][$root] = [
+        $GLOBALS['TL_FLEX']['tl_content.' . $model->id] = [
             'type' => $model->type,
             'position' => 0,
             'parent' => $model->ptable . '.' . $model->pid,
@@ -150,10 +107,9 @@ class FlexController extends AbstractContentElementController
 
     protected static function makeSegmantation($segmentation, $modifier, $framework): array
     {
-        $cells = explode(':', $segmentation);
+        $cells = explode(':', trim(preg_replace('/\s+/', '', $segmentation)));
         $attributes = [];
 
-        $prefix = $framework ? 'col' : 'cell';
         $modifier = ($modifier !== 'xs') ? '-' . $modifier : null;
 
         foreach ($cells as $position => $cell) {
@@ -164,14 +120,15 @@ class FlexController extends AbstractContentElementController
                 continue;
             }
 
-            if (in_array(current($string), self::$displays, true)) {
+            // .d-*
+            if (in_array(current($string), ['h', 'hide', 'hidden', 's', 'show'], true)) {
                 $display = current($string);
 
                 if ($display === 'h' || $display === 'hide' || $display === 'hidden') {
                     $cellClass[] = 'd' . $modifier . '-none';
                     $attributes['visible'][$position] = 'hide';
                 }
-                else if ($display === 's' || $display === 'show') {
+                else {
                     $cellClass[] = 'd' . $modifier . '-block';
                     $attributes['visible'][$position] = 'show';
                 }
@@ -179,110 +136,93 @@ class FlexController extends AbstractContentElementController
                 next($string);
             }
 
+            // Flex
             if ($framework === '1') {
-                if (in_array(current($string), self::$cols, true)) {
+                // .col-*
+                if (in_array(current($string), [...array_map('strval', range(1, 12)), 'a', 'auto', 'n', 'none'], true)) {
                     $col = current($string);
 
                     if ($col === 'n' || $col === 'none') {
-                        $cellClass[] = $prefix . $modifier;
+                        $cellClass[] = 'col' . $modifier;
                         $attributes['col'][$position] = 'narrow';
                     }
                     else if ($col === 'a') {
-                        $cellClass[] = $prefix . $modifier . '-auto';
+                        $cellClass[] = 'col' . $modifier . '-auto';
                         $attributes['col'][$position] = 'auto';
                     }
                     else {
-                        $cellClass[] = $prefix . $modifier . '-' . $col;
+                        $cellClass[] = 'col' . $modifier . '-' . $col;
                         $attributes['col'][$position] = $col;
                     }
 
                     next($string);
                 }
 
-                if (in_array(current($string), self::$offsets, true)) {
+                // .offset-*
+                if (in_array(current($string), ['', ...array_map('strval', range(1, 12))], true)) {
                     $offset = current($string);
 
-                    if (!in_array($offset, ['', 'a', 'auto'])) {
+                    if ($offset !== '') {
                         $cellClass[] = 'offset' . $modifier . '-' . $offset;
                         $attributes['offset'][$position] = $offset;
                     }
 
                     next($string);
                 }
+            }
 
-                if (in_array(current($string), self::$orders, true)) {
-                    $order = current($string);
+            // Grid
+            if ($framework === '2') {
+                // .col-* & .offset-*
+                if (current($string) === '' || preg_match('/^(([a1-9][0-2]{0,1})\/)?([1-9][0-2]{0,2})$/', current($string), $matches)) {
+                    $col = current($string);
 
-                    if (!in_array($order, ['' , 'a', 'auto'])) {
-                        if ($order === 'f' || $order === 'first') {
-                            $cellClass[] = 'order' . $modifier . '-first';
-                            $attributes['order'][$position] = 'f';
+                    if ($col !== '') {
+                        $cellClass[] = 'col' . $modifier . '-' . $matches[3];
+                        $attributes['col-span'][$position] = $matches[3];
+
+                        if ($matches[2] !== '') {
+                            if ($matches[2] === 'a') $matches[2] = 'auto';
+
+                            $cellClass[] = 'offset' . $modifier . '-' . $matches[2];
+                            $attributes['col-start'][$position] = $matches[2];
                         }
-                        else if ($order === 'l' || $order === 'last') {
-                            $cellClass[] = 'order' . $modifier . '-last';
-                            $attributes['order'][$position] = 'l';
-                        }
-                        else if ($order <= '5') {
-                            $cellClass[] = 'order' . $modifier . '-' . $order;
-                            $attributes['order'][$position] = $order;
+                    }
+
+                    next($string);
+                }
+
+                // .row-* & .row-offset-*
+                if (current($string) === '' || preg_match('/^(([a1-9][0-2]{0,1})\/)?([1-9][0-2]{0,2})$/', current($string), $matches)) {
+                    $row = current($string);
+
+                    if ($row !== '') {
+                        $cellClass[] = 'row' . $modifier . '-' . $matches[3];
+                        $attributes['row-span'][$position] = $matches[3];
+
+                        if ($matches[2] !== '') {
+                            if ($matches[2] === 'a') $matches[2] = 'auto';
+
+                            $cellClass[] = 'row-offset' . $modifier . '-' . $matches[2];
+                            $attributes['row-start'][$position] = $matches[2];
                         }
                     }
 
                     next($string);
                 }
             }
-            else {
-                if (in_array(current($string), self::$cols, true)) {
-                    $col = current($string);
 
-                    if (!in_array($col, ['a', 'auto', 'n', 'none'])) {
-                        $cellClass[] = $prefix . $modifier . '-' . $col;
-                        $attributes['col'][$position] = $col;
-                    }
+            // .order-*
+            if (in_array(current($string), [...array_map('strval', range(1, 12)), 'f', 'first', 'l', 'last'], true)) {
+                $order = current($string);
 
-                    next($string);
-                }
+                if ($order === 'f') $order = 'first';
+                if ($order === 'l') $order = 'last';
 
-                if (in_array(current($string), self::$offsets, true)) {
-                    $offset = current($string);
+                $cellClass[] = 'order' . $modifier . '-' . $order;
+                $attributes['order'][$position] = $order;
 
-                    if ($offset !== '') {
-                        if ($offset === '0' || $offset === 'a') {
-                            $offset = 'auto';
-                        }
-
-                        $cellClass[] = 'offset' . $modifier . '-' . $offset;
-                        $attributes['offset'][$position] = $offset;
-                    }
-
-                    next($string);
-                }
-
-                if (in_array(current($string), self::$gridRows, true)) {
-                    $row = current($string);
-
-                    if ($row !== '') {
-                        $cellClass[] = 'row' . $modifier . '-' . $row;
-                        $attributes['row'][$position] = $row;
-                    }
-
-                    next($string);
-                }
-
-                if (in_array(current($string), self::$orders, true)) {
-                    $order = current($string);
-
-                    if (!in_array($order, ['', 'f', 'first', 'l', 'last'])) {
-                        if ($order === '0' || $order === 'a') {
-                            $order = 'auto';
-                        }
-
-                        $cellClass[] = 'order' . $modifier . '-' . $order;
-                        $attributes['order'][$position] = $order;
-                    }
-
-                    next($string);
-                }
+                next($string);
             }
 
             $attributes['classes'][$position] = count($cellClass) ? implode(' ', $cellClass) : null;
