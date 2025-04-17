@@ -159,7 +159,7 @@ class FlexController extends AbstractContentElementController
                 }
 
                 // .offset-*
-                if (in_array(current($string), ['', ...array_map('strval', range(1, 12))], true)) {
+                if (in_array(current($string), ['', ...array_map('strval', range(0, 12))], true)) {
                     $offset = current($string);
 
                     if ($offset !== '') {
