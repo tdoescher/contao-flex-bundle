@@ -27,7 +27,7 @@ class FlexController extends AbstractContentElementController
         if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request)) {
             $wildcard = [];
 
-            foreach (['xs', 'sm', 'md', 'lg', 'xxl', 'class', 'container_class'] as $field) {
+            foreach (['xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'class', 'container_class'] as $field) {
                 if ($model->{'flex_' . $field}) {
                     $wildcard[] = '<strong>' . $GLOBALS['TL_LANG']['tl_content']['flex_' . $field][0] . ':</strong> ' . $model->{'flex_' . $field};
                 }
@@ -40,7 +40,7 @@ class FlexController extends AbstractContentElementController
         }
 
         $segmentation = [];
-        foreach (['xs', 'sm', 'md', 'lg', 'xxl'] as $field) {
+        foreach (['xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as $field) {
             if ($model->{'flex_' . $field}) {
                 $segmentation[$field] = self::makeSegmantation($model->{'flex_' . $field}, $field, $model->flex_bootstrap);
             }
