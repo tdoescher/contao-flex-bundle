@@ -7,7 +7,7 @@ Dieses Bundle erweitert Contao um Content-Elemente zum Erzeugen von Flexbox Layo
 
 **Im Seitenlayout muss das JavaScript-Template js_flexbox aktiviert werden (dient nur dazu das CSS-Framework zuladen, beinhaltet kein JavScript), alternativ kann das Bootstrap Framework geladen werden.**
 
-##
+
 ## Dokumentation Flex-Layout
 
 ### 1. Stelle: Sichtbarkeit (optional)
@@ -46,7 +46,8 @@ l, last		Positioniert die Zelle an das Ende.
 MD: 6,,1:6,,2:6,,4:6,,3		die dritte und vierte Zelle werden vertauscht  
 XL: 3,,0			die Zellen sind wieder in der normalen Reihenfolge
 ```
-##
+
+
 ## Dokumentation Grid-Layout
 ### 1. Stelle: Sichtbarkeit (optional)
 ```
@@ -78,6 +79,5 @@ l, last		Positioniert die Zelle an das Ende.
 0 - 5		Positioniert die Zelle an die angegeben Position.
 ```
 
-###
 ## Breite der Spalten:
 ![](doc/overview-colmns.png)
