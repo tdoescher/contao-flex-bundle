@@ -50,7 +50,7 @@ $flex-display: inline, inline-block, block, grid, flex, none;
 @include flex-generate();
 
 @each $modifier, $breakpoint in $breakpoints {
-  @container (width >= #{$breakpoint}) {
+  @media screen and (width >= #{$breakpoint}) {
     @include flex-generate("-" + $modifier);
   }
 }
