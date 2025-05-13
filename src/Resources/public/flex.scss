@@ -3,7 +3,7 @@ $spacings: (0: 0, 1: 0.25rem, 2: 0.5rem, 3: 1rem, 4: 1.5rem, 5: 3rem);
 
 $flex-columns: 12;
 $flex-orders: (first: -1, 0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, last: 6);
-$flex-justify: start, end, center, space-around, space-between, space-evenly;
+$flex-justify: (start: start, end: end, center: center, around: space-around, between: space-between, evenly: space-evenly);
 $flex-align: start, end, center, baseline, stretch;
 $flex-self: auto, start, end, center, baseline, stretch;
 $flex-display: inline, inline-block, block, grid, flex, none;
@@ -36,14 +36,8 @@ $flex-display: inline, inline-block, block, grid, flex, none;
   @each $key, $value in $flex-orders {
     .order#{$modifier}-#{$key} { --flex-order: #{$value}; }
   }
-  @each $value in $flex-justify {
-    .justify-content#{$modifier}-#{$value} { --flex-justify: #{$value}; }
-  }
-  @each $value in $flex-align {
-    .align-items#{$modifier}-#{$value} { --flex-items: #{$value}; }
-  }
-  @each $value in $flex-self {
-    .align-self#{$modifier}-#{$value} { --flex-self: #{$value}; }
+  @each $key, $value in $flex-justify {
+    .justify-content#{$modifier}-#{$key} { --flex-justify: #{$value}; }
   }
 }
 
