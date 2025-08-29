@@ -39,6 +39,12 @@ $flex-display: inline, inline-block, block, grid, flex, none;
   @each $key, $value in $flex-justify {
     .justify-content#{$modifier}-#{$key} { --flex-justify: #{$value}; }
   }
+  @each $value in $flex-align {
+    .align-items#{$modifier}-#{$value} { --flex-items: #{$value}; }
+  }
+  @each $value in $flex-self {
+    .align-self#{$modifier}-#{$value} { --flex-self: #{$value}; }
+  }
 }
 
 @include flex-generate();

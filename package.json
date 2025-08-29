@@ -11,7 +11,7 @@
     "build": "gulp build"
   },
   "devDependencies": {
-    "gulp": "^5.0.0",
+    "gulp": "^5.0.1",
     "gulp-esbuild": "^0.12.1",
     "esbuild-sass-plugin": "^3.3.1"
   }
