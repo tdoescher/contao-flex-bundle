@@ -19,7 +19,7 @@ $flex-display: inline, inline-block, block, grid, flex, none;
   .col#{$modifier} { --flex-flex: 1 0 0; --flex-width: 100%; }
   .col#{$modifier}-auto { --flex-width: auto; }
   @for $index from 1 through 12 {
-    .col#{$modifier}-#{$index} { --flex-cols: #{$index}; }
+    .col#{$modifier}-#{$index} { --flex-cols: #{$index}; --flex-width: unset; }
     .row#{$modifier}-#{$index} { --flex-rows: #{$index}; }
   }
   @each $key, $value in $spacings {
