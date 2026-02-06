@@ -1,49 +1,51 @@
 $breakpoints: (sm: 36rem, md: 48rem, lg: 62rem, xl: 75rem, xxl: 87.5rem);
 $spacings: (0: 0, 1: 0.25rem, 2: 0.5rem, 3: 1rem, 4: 1.5rem, 5: 3rem);
 
-$flex-columns: 12;
 $flex-orders: (first: -1, 0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, last: 6);
 $flex-justify: (start: start, end: end, center: center, around: space-around, between: space-between, evenly: space-evenly);
 $flex-align: start, end, center, baseline, stretch;
 $flex-self: auto, start, end, center, baseline, stretch;
 $flex-display: inline, inline-block, block, grid, flex, none;
 
-.content-flex { container-type: inline-size; --flex-gap-x: 1.5rem; --flex-gap-y: 1.5rem;
-  > .row { display: flex; flex-wrap: wrap; margin-inline: calc(var(--flex-gap-x) / -2); margin-block: calc(var(--flex-gap-y) / -2); justify-content: var(--flex-justify, normal); align-items: var(--flex-items, normal); }
-  > .row > * { flex: var(--flex-flex, 0 0 auto); order: var(--flex-order, 0); align-self: var(--flex-self); width: var(--flex-width, calc(100% / 12 * var(--flex-cols, 100))); max-width: 100%; margin-inline-start: calc(100% / 12 * var(--flex-offset, 0)); padding-inline: calc(var(--flex-gap-x) / 2); padding-block: calc(var(--flex-gap-y) / 2); box-sizing: border-box; }
-  > .grid { display: grid; gap: var(--flex-gap-y, 1.5rem) var(--flex-gap-x, 1.5rem); grid-template-columns: repeat(12, 1fr); justify-content: var(--flex-justify, normal); align-items: var(--flex-items, normal); }
-  > .grid > * { grid-column: var(--flex-offset, auto) / span var(--flex-cols, 12); grid-row: var(--flex-row-offset, auto) / span var(--flex-rows, auto); order: var(--flex-order, 0); align-self: var(--flex-self); }
+.content-flex { container-type: inline-size; --_fgx: 1.5rem; --_fgy: 1.5rem;
+  > .row { display: flex; flex-wrap: wrap; margin-inline: calc(var(--_fgx) / -2); margin-block: calc(var(--_fgy) / -2); justify-content: var(--_fj, normal); align-items: var(--_fi, normal); }
+  > .row > * { flex: var(--_ff, 0 0 auto); order: var(--_fo, 0); align-self: var(--_fs); width: var(--_fw, calc(100% / 12 * var(--_fc, 100))); max-width: 100%; margin-inline-start: calc(100% / 12 * var(--_fo, 0)); padding-inline: calc(var(--_fgx) / 2); padding-block: calc(var(--_fgy) / 2); box-sizing: border-box; }
+  > .grid { display: grid; gap: var(--_fgy, 1.5rem) var(--_fgx, 1.5rem); grid-template-columns: repeat(12, 1fr); justify-content: var(--_fj, normal); align-items: var(--_fi, normal); }
+  > .grid > * { grid-column: var(--_fo, auto) / span var(--_fc, 12); grid-row: var(--_fro, auto) / span var(--_fr, auto); order: var(--_fo, 0); align-self: var(--_fs); }
 }
 
 @mixin flex-generate($modifier: "") {
-  .col#{$modifier} { --flex-flex: 1 0 0; --flex-width: 100%; }
-  .col#{$modifier}-auto { --flex-width: auto; }
+  .col#{$modifier} { --_ff: 1 0 0; --_fw: 100%; }
+  .col#{$modifier}-auto { --_fw: auto; }
   @for $index from 1 through 12 {
-    .col#{$modifier}-#{$index} { --flex-cols: #{$index}; --flex-width: unset; }
-    .row#{$modifier}-#{$index} { --flex-rows: #{$index}; }
+    .col#{$modifier}-#{$index} { --_fc: #{$index}; --_fw: unset; }
+    .row#{$modifier}-#{$index} { --_fr: #{$index}; }
   }
   @each $key, $value in $spacings {
-    .g#{$modifier}-#{$key} { --flex-gap-x: #{$value}; --flex-gap-y: #{$value}; }
-    .gx#{$modifier}-#{$key} { --flex-gap-x: #{$value}; }
-    .gy#{$modifier}-#{$key} { --flex-gap-y: #{$value}; }
+    .g#{$modifier}-#{$key} { --_fgx: #{$value}; --_fgy: #{$value}; }
+    .gx#{$modifier}-#{$key} { --_fgx: #{$value}; }
+    .gy#{$modifier}-#{$key} { --_fgy: #{$value}; }
   }
-  .offset#{$modifier}-auto { --flex-offset: auto; }
-  .row-offset#{$modifier}-auto { --flex-row-offset: auto; }
+  .offset#{$modifier}-auto { --_fo: auto; }
+  .row-offset#{$modifier}-auto { --_fro: auto; }
   @for $index from 0 through 12 {
-    .offset#{$modifier}-#{$index} { --flex-offset: #{$index}; }
-    .row-offset#{$modifier}-#{$index} { --flex-row-offset: #{$index}; }
+    .offset#{$modifier}-#{$index} { --_fo: #{$index}; }
+    .row-offset#{$modifier}-#{$index} { --_fro: #{$index}; }
   }
   @each $key, $value in $flex-orders {
-    .order#{$modifier}-#{$key} { --flex-order: #{$value}; }
+    .order#{$modifier}-#{$key} { --_fo: #{$value}; }
   }
   @each $key, $value in $flex-justify {
-    .justify-content#{$modifier}-#{$key} { --flex-justify: #{$value}; }
+    .justify-content#{$modifier}-#{$key} { --_fj: #{$value}; }
   }
   @each $value in $flex-align {
-    .align-items#{$modifier}-#{$value} { --flex-items: #{$value}; }
+    .align-items#{$modifier}-#{$value} { --_fi: #{$value}; }
   }
   @each $value in $flex-self {
-    .align-self#{$modifier}-#{$value} { --flex-self: #{$value}; }
+    .align-self#{$modifier}-#{$value} { --_fs: #{$value}; }
+  }
+  @each $value in $flex-display {
+    .d#{$modifier}-#{$value} { display: $value !important; }
   }
 }
 
