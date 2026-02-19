@@ -8,11 +8,13 @@ $flex-self: auto, start, end, center, baseline, stretch;
 $flex-display: inline, inline-block, block, grid, flex, none;
 
 .content-flex { container-type: inline-size; --_fgx: 1.5rem; --_fgy: 1.5rem;
-  > .row { display: flex; flex-wrap: wrap; margin-inline: calc(var(--_fgx) / -2); margin-block: calc(var(--_fgy) / -2); justify-content: var(--_fjc); align-items: var(--_fai); --_ff: 0 0 auto; --_fc: 100; --_fos: 0; }
+  > .row { display: flex; flex-wrap: wrap; margin-inline: calc(var(--_fgx) / -2); margin-block: calc(var(--_fgy) / -2); justify-content: var(--_fjc, normal); align-items: var(--_fai, normal); --_ff: 0 0 auto; --_fc: 100; --_fos: 0; --_fo: 0; --_fas: auto; }
   > .row > * { flex: var(--_ff); order: var(--_fo); align-self: var(--_fas); width: var(--_fw, calc(100% / 12 * var(--_fc))); max-width: 100%; margin-inline-start: calc(100% / 12 * var(--_fos)); padding-inline: calc(var(--_fgx) / 2); padding-block: calc(var(--_fgy) / 2); box-sizing: border-box; }
-  > .grid { display: grid; gap: var(--_fgy) var(--_fgx); grid-template-columns: repeat(12, 1fr); justify-content: var(--_fjc); align-items: var(--_fai); --_fo: 0; --_fro: auto; --_fr: auto; --_fos: auto; --_fc: 12; }
+
+  > .grid { display: grid; gap: var(--_fgy) var(--_fgx); grid-template-columns: repeat(12, 1fr); justify-content: var(--_fjc, normal); align-items: var(--_fai, normal); --_fo: 0; --_fro: auto; --_fr: auto; --_fos: auto; --_fc: 12; --_fas: auto; }
   > .grid > * { grid-column: var(--_fos) / span var(--_fc); grid-row: var(--_fro) / span var(--_fr); align-self: var(--_fas); }
-  > * > [class^="d-"], [class*=" d-"] { display: var(--_fd) !important; }
+
+  > * > [class^="d-"], > * > [class*=" d-"] { display: var(--_fd) !important; }
 }
 
 @mixin flex-generate($modifier: "") {
@@ -53,7 +55,7 @@ $flex-display: inline, inline-block, block, grid, flex, none;
 @include flex-generate();
 
 @each $modifier, $breakpoint in $breakpoints {
-  @media screen and (width >= #{$breakpoint}) {
+  @media (width >= #{$breakpoint}) {
     @include flex-generate("-" + $modifier);
   }
 }
