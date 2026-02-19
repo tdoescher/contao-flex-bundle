@@ -27,23 +27,23 @@ $flex-display: inline, inline-block, block, grid, flex, none;
     .gx#{$modifier}-#{$key} { --_fgx: #{$value}; }
     .gy#{$modifier}-#{$key} { --_fgy: #{$value}; }
   }
-  .offset#{$modifier}-auto { --_fo: auto; }
+  .offset#{$modifier}-auto { --_fos: auto; }
   .row-offset#{$modifier}-auto { --_fro: auto; }
   @for $index from 0 through 12 {
-    .offset#{$modifier}-#{$index} { --_fo: #{$index}; }
+    .offset#{$modifier}-#{$index} { --_fos: #{$index}; }
     .row-offset#{$modifier}-#{$index} { --_fro: #{$index}; }
   }
   @each $key, $value in $flex-orders {
     .order#{$modifier}-#{$key} { --_fo: #{$value}; }
   }
   @each $key, $value in $flex-justify {
-    .justify-content#{$modifier}-#{$key} { --_fj: #{$value}; }
+    .justify-content#{$modifier}-#{$key} { --_fjc: #{$value}; }
   }
   @each $value in $flex-align {
-    .align-items#{$modifier}-#{$value} { --_fi: #{$value}; }
+    .align-items#{$modifier}-#{$value} { --_fai: #{$value}; }
   }
   @each $value in $flex-self {
-    .align-self#{$modifier}-#{$value} { --_fs: #{$value}; }
+    .align-self#{$modifier}-#{$value} { --_fas: #{$value}; }
   }
   @each $value in $flex-display {
     .d#{$modifier}-#{$value} { --_fd: #{$value}; }
