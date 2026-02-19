@@ -42,7 +42,7 @@ class FlexController extends AbstractContentElementController
         $segmentation = [];
         foreach (['xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as $field) {
             if ($model->{'flex_' . $field}) {
-                $segmentation[$field] = self::makeSegmantation($model->{'flex_' . $field}, $field, $model->flex_bootstrap);
+                $segmentation[$field] = self::makeSegmentation($model->{'flex_' . $field}, $field, $model->flex_bootstrap);
             }
         }
 
@@ -105,7 +105,7 @@ class FlexController extends AbstractContentElementController
         return $template->getResponse();
     }
 
-    protected static function makeSegmantation($segmentation, $modifier, $framework): array
+    protected static function makeSegmentation($segmentation, $modifier, $framework): array
     {
         $cells = explode(':', trim(preg_replace('/\s+/', '', $segmentation)));
         $attributes = [];

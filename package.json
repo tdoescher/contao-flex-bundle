@@ -8,11 +8,14 @@
     "url": "git+https://github.com/tdoescher/contao-cokiban-bundle.git"
   },
   "scripts": {
-    "build": "gulp build"
+    "build": "node esbuild.js",
+    "lg": "git add . && git commit -am \"Update\" && git push"
   },
   "devDependencies": {
-    "gulp": "^5.0.1",
-    "gulp-esbuild": "^0.12.1",
-    "esbuild-sass-plugin": "^3.3.1"
+    "@eslint/js": "^10.0.1",
+    "esbuild": "^0.27.3",
+    "esbuild-sass-plugin": "^3.6.0",
+    "eslint": "^10.0.0",
+    "globals": "^17.3.0"
   }
 }

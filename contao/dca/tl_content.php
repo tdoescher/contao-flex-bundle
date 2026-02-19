@@ -11,7 +11,7 @@
 
 $rgxpFlex = '/^[,:\/0-9a-z\r\n]*$/';
 
-$GLOBALS['TL_DCA']['tl_content']['palettes']['flex'] = '{type_legend},title,headline,type;{flex_legend},flex_xs,flex_sm,flex_md,flex_lg,flex_xl,flex_xxl;{flex_extended_legend},flex_class,flex_repeat,flex_bootstrap,flex_multiline,flex_justify,flex_align,flex_gutter,flex_gutter_y,flex_container_class;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['flex'] = '{type_legend},title,headline,type;{flex_legend},flex_xs,flex_sm,flex_md,flex_lg,flex_xl,flex_xxl;{flex_extended_legend},flex_class,flex_repeat,flex_bootstrap,flex_justify,flex_align,flex_gutter,flex_gutter_y,flex_container_class;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['flex_xs'] = [
     'exclude' => true,
