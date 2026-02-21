@@ -1,6 +1,5 @@
-$breakpoints: (sm: 36rem, md: 48rem, lg: 62rem, xl: 75rem, xxl: 87.5rem);
-$spacings: (0: 0, 1: 0.25rem, 2: 0.5rem, 3: 1rem, 4: 1.5rem, 5: 3rem);
-
+$flex-breakpoints: (sm: 36rem, md: 48rem, lg: 62rem, xl: 75rem, xxl: 87.5rem) !default;
+$flex-spacings: (0: 0, 1: 0.25rem, 2: 0.5rem, 3: 1rem, 4: 1.5rem, 5: 3rem) !default;
 $flex-orders: (first: -1, 0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, last: 6);
 $flex-justify: (start: start, end: end, center: center, around: space-around, between: space-between, evenly: space-evenly);
 $flex-align: start, end, center, baseline, stretch;
@@ -57,7 +56,7 @@ $flex-display: block, none;
     .col#{$modifier}-#{$index} { --_fc: #{$index}; --_fw: unset; }
     .row#{$modifier}-#{$index} { --_fr: #{$index}; }
   }
-  @each $key, $value in $spacings {
+  @each $key, $value in $flex-spacings {
     .g#{$modifier}-#{$key} { --_fgx: #{$value}; --_fgy: #{$value}; }
     .gx#{$modifier}-#{$key} { --_fgx: #{$value}; }
     .gy#{$modifier}-#{$key} { --_fgy: #{$value}; }
@@ -87,7 +86,7 @@ $flex-display: block, none;
 
 @include flex-generate();
 
-@each $modifier, $breakpoint in $breakpoints {
+@each $modifier, $breakpoint in $flex-breakpoints {
   @media (width >= #{$breakpoint}) {
     @include flex-generate("-" + $modifier);
   }
