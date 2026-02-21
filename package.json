@@ -9,7 +9,6 @@
     "url": "git+https://github.com/tdoescher/contao-cokiban-bundle.git"
   },
   "files": [
-    "flex.scss",
     "public/flex.scss"
   ],
   "scripts": {
