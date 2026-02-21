@@ -1,12 +1,17 @@
 {
   "author": "Torben Döscher <mail@tdoescher.de>",
   "description": "Flexbox-/Grid-Layout System (kompatibel mit Bootstrap)",
+  "name": "@tdoescher/cokiban",
   "type": "module",
   "license": "LGPL-3.0-or-later",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tdoescher/contao-cokiban-bundle.git"
   },
+  "files": [
+    "flex.scss",
+    "public/flex.scss"
+  ],
   "scripts": {
     "build": "node esbuild.js",
     "lg": "git add . && git commit -am \"Update\" && git push"
