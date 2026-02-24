@@ -6,10 +6,10 @@ node_modules
 .env
 
 # macOS
-.nova
 .idea
+.nova
 .vscode
 .DS_Store*
-CLAUDE.md
-Icon^M
 ._*
+AGENTS.md
+Icon^M
