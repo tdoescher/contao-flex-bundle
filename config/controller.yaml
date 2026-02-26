@@ -1,5 +1,6 @@
 services:
   _defaults:
     autoconfigure: true
+    autowire: true
 
   tdoescher\FlexBundle\Controller\ContentElement\FlexController: ~
