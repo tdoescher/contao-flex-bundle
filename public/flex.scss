@@ -3,11 +3,12 @@ $flex-spacings: (0: 0, 1: 0.25rem, 2: 0.5rem, 3: 1rem, 4: 1.5rem, 5: 3rem) !defa
 
 $flex-orders: (first: -1, 0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, last: 6);
 $flex-justify: (start: start, end: end, center: center, around: space-around, between: space-between, evenly: space-evenly);
+$flex-justify-self: (start: start, end: end, center: center, around: space-around, between: space-between, evenly: space-evenly);
 $flex-align: start, end, center, baseline, stretch;
-$flex-self: auto, start, end, center, baseline, stretch;
+$flex-align-self: auto, start, end, center, baseline, stretch;
 $flex-display: block, none;
 
-.content-flex { --_fgx: 1.5rem; --_fgy: 1.5rem; --_fc: 12; --_fas: auto;
+.content-flex { --_fgx: 1.5rem; --_fgy: 1.5rem; --_fc: 12; --_fjs: auto; --_fas: auto;
   > .row {
     display: flex;
     flex-wrap: wrap;
@@ -22,6 +23,7 @@ $flex-display: block, none;
   > .row > * {
     flex: var(--_ff);
     order: var(--_fo);
+    justify-self: var(--_fjs);
     align-self: var(--_fas);
     width: var(--_fw, calc(100% / 12 * var(--_fc)));
     max-width: 100%;
@@ -44,6 +46,7 @@ $flex-display: block, none;
   > .grid > * {
     grid-column: var(--_fos) / span var(--_fc);
     grid-row: var(--_fro) / span var(--_fr);
+    justify-self: var(--_fjs);
     align-self: var(--_fas);
   }
 
@@ -74,10 +77,13 @@ $flex-display: block, none;
   @each $key, $value in $flex-justify {
     .justify-content#{$modifier}-#{$key} { --_fjc: #{$value}; }
   }
+  @each $key, $value in $flex-justify-self {
+    .justify-self#{$modifier}-#{$key} { --_fjs: #{$value}; }
+  }
   @each $value in $flex-align {
     .align-items#{$modifier}-#{$value} { --_fai: #{$value}; }
   }
-  @each $value in $flex-self {
+  @each $value in $flex-align-self {
     .align-self#{$modifier}-#{$value} { --_fas: #{$value}; }
   }
   @each $value in $flex-display {
