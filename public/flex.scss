@@ -3,7 +3,7 @@ $flex-spacings: (0: 0, 1: 0.25rem, 2: 0.5rem, 3: 1rem, 4: 1.5rem, 5: 3rem) !defa
 
 $flex-orders: (first: -1, 0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, last: 6);
 $flex-justify: (start: start, end: end, center: center, around: space-around, between: space-between, evenly: space-evenly);
-$flex-justify-self: (start: start, end: end, center: center, around: space-around, between: space-between, evenly: space-evenly);
+$flex-justify-self: auto, start, end, center, baseline, stretch;
 $flex-align: start, end, center, baseline, stretch;
 $flex-align-self: auto, start, end, center, baseline, stretch;
 $flex-display: block, none;
@@ -77,8 +77,8 @@ $flex-display: block, none;
   @each $key, $value in $flex-justify {
     .justify-content#{$modifier}-#{$key} { --_fjc: #{$value}; }
   }
-  @each $key, $value in $flex-justify-self {
-    .justify-self#{$modifier}-#{$key} { --_fjs: #{$value}; }
+  @each $value in $flex-justify-self {
+    .justify-self#{$modifier}-#{$value} { --_fjs: #{$value}; }
   }
   @each $value in $flex-align {
     .align-items#{$modifier}-#{$value} { --_fai: #{$value}; }

@@ -32,6 +32,36 @@ Dieses Bundle erweitert Contao um Content-Elemente zum Erzeugen von Flexbox Layo
 | **Spalten Klassen** | Eigene CSS-Klassen je Spalte, Syntax identisch zu den Breakpoint-Feldern: Zellen durch `:` getrennt, mehrere Klassen pro Zelle durch `,` getrennt |
 | **Wiederholen** | Wiederholt das Segmentierungsmuster, wenn mehr Kindelemente vorhanden sind als Zellen definiert wurden |
 
+## Zellen-Optionen (CSS-Hilfsklassen)
+
+Folgende CSS-Klassen können über das Feld **Spalten Klassen** auf einzelne Zellen angewendet werden:
+
+**Horizontale Ausrichtung (`justify-self`)**
+
+| Klasse | Beschreibung |
+|---|---|
+| `justify-self-start` | Richtet die Zelle horizontal am Anfang aus |
+| `justify-self-end` | Richtet die Zelle horizontal am Ende aus |
+| `justify-self-center` | Richtet die Zelle horizontal mittig aus |
+| `justify-self-around` | Horizontale Ausrichtung: space-around |
+| `justify-self-between` | Horizontale Ausrichtung: space-between |
+| `justify-self-evenly` | Horizontale Ausrichtung: space-evenly |
+
+Alle Klassen sind auch mit Breakpoint-Suffix verfügbar: `justify-self-sm-*`, `justify-self-md-*`, `justify-self-lg-*`, `justify-self-xl-*`, `justify-self-xxl-*`.
+
+**Vertikale Ausrichtung (`align-self`)**
+
+| Klasse | Beschreibung |
+|---|---|
+| `align-self-auto` | Setzt die vertikale Ausrichtung zurück |
+| `align-self-start` | Richtet die Zelle vertikal am Anfang aus |
+| `align-self-end` | Richtet die Zelle vertikal am Ende aus |
+| `align-self-center` | Richtet die Zelle vertikal mittig aus |
+| `align-self-baseline` | Richtet die Zelle an der Textbasislinie aus |
+| `align-self-stretch` | Dehnt die Zelle auf die volle Höhe aus |
+
+Alle Klassen sind auch mit Breakpoint-Suffix verfügbar: `align-self-sm-*`, `align-self-md-*`, `align-self-lg-*`, `align-self-xl-*`, `align-self-xxl-*`.
+
 ## Dokumentation Flex-Layout
 
 ### 1. Stelle: Sichtbarkeit (optional)
@@ -55,7 +85,7 @@ XXL: 3:3:3:3:s,3 	letzte Zelle wird wieder eingeblendet
 - **0 - 12:** Versatz vor der Zelle über Anzahl der 12 Spalten.
 
 ```
-MD: 8,2		alle Zellen werden mittig ein Drittel der Breite angezeigt
+MD: 8,2		alle Zellen werden mittig zwei Drittel der Breite angezeigt
 XL: 6		alle Zellen werden nebeneinander angezeigt
 ```
 
@@ -67,7 +97,7 @@ XL: 6		alle Zellen werden nebeneinander angezeigt
 
 ```
 MD: 6,,1:6,,2:6,,4:6,,3		die dritte und vierte Zelle werden vertauscht
-XL: 6,,f:6,,l			erste und zweite Zelle werden vertauscht
+XL: 6,,l:6,,f			erste und zweite Zelle werden vertauscht
 ```
 
 ## Dokumentation Grid-Layout
