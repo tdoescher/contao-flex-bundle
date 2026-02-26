@@ -1,7 +1,7 @@
 {
   "name": "tdoescher/flex-bundle",
   "description": "Flexbox-/Grid-Layout System (kompatibel mit Bootstrap)",
-  "keywords": ["contao", "flex", "flexbox", "grid", "layout", "columns"],
+  "keywords": ["contao", "columns", "flex", "flexbox", "grid", "layout"],
   "type": "contao-bundle",
   "license": "LGPL-3.0-or-later",
   "authors": [
