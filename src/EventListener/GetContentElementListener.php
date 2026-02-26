@@ -11,15 +11,15 @@
 
 namespace tdoescher\FlexBundle\EventListener;
 
-use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
 use Contao\ContentModel;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
 
 #[AsHook('getContentElement', priority: 100)]
 class GetContentElementListener
 {
     public function __invoke(ContentModel $contentModel, string $buffer, $element): string
     {
-        if (!isset($GLOBALS['TL_FLEX']) || !count($GLOBALS['TL_FLEX'])) {
+        if (empty($GLOBALS['TL_FLEX'])) {
             return $buffer;
         }
 
@@ -38,7 +38,7 @@ class GetContentElementListener
             $buffer = '<div class="' . self::getClass($GLOBALS['TL_FLEX'][$root]) . '">' . $buffer . '</div>';
         }
 
-        if ($contentModel->type === 'flex' && in_array($GLOBALS['TL_FLEX'][$root]['parent'], array_keys($GLOBALS['TL_FLEX']))) {
+        if ($contentModel->type === 'flex' && isset($GLOBALS['TL_FLEX'][$GLOBALS['TL_FLEX'][$root]['parent']])) {
             $parentKey = $GLOBALS['TL_FLEX'][$root]['parent'];
 
             $GLOBALS['TL_FLEX'][$parentKey]['position']++;
@@ -48,7 +48,7 @@ class GetContentElementListener
         return $buffer;
     }
 
-    protected static function getClass($box): string
+    protected static function getClass(array $box): string
     {
         $class = [];
 
@@ -68,7 +68,7 @@ class GetContentElementListener
         }
 
         if (in_array($box['framework'], ['1', '2'])) {
-            if (count($class) === 0 || $class[0] === null) {
+            if (count($class) === 0) {
                 $class[] = 'col';
             }
         }

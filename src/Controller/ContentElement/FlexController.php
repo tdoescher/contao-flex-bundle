@@ -14,17 +14,21 @@ namespace tdoescher\FlexBundle\Controller\ContentElement;
 use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
+use Contao\CoreBundle\Routing\ScopeMatcher;
 use Contao\CoreBundle\Twig\FragmentTemplate;
-use Contao\System;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 #[AsContentElement(category: 'miscellaneous', nestedFragments: true)]
 class FlexController extends AbstractContentElementController
 {
+    public function __construct(private readonly ScopeMatcher $scopeMatcher)
+    {
+    }
+
     protected function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
-        if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request)) {
+        if ($this->scopeMatcher->isBackendRequest($request)) {
             $wildcard = [];
 
             foreach (['xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'class', 'container_class'] as $field) {
@@ -32,8 +36,10 @@ class FlexController extends AbstractContentElementController
                     $wildcard[] = '<strong>' . $GLOBALS['TL_LANG']['tl_content']['flex_' . $field][0] . ':</strong> ' . $model->{'flex_' . $field};
                 }
             }
-            if (unserialize($model->cssID)[1]) {
-                $wildcard[] = '<strong>' . $GLOBALS['TL_LANG']['tl_content']['flex_main_class'] . ':</strong> ' . unserialize($model->cssID)[1];
+
+            $cssID = unserialize($model->cssID);
+            if (!empty($cssID[1])) {
+                $wildcard[] = '<strong>' . $GLOBALS['TL_LANG']['tl_content']['flex_main_class'] . ':</strong> ' . $cssID[1];
             }
 
             $template->wildcard = implode(' - ', $wildcard);
@@ -64,16 +70,15 @@ class FlexController extends AbstractContentElementController
 
         $containerClass = [];
 
-        switch ($model->flex_bootstrap) {
-            case '0':
-                $containerClass[] = 'flex';
-                break;
-            case '1':
-                $containerClass[] = 'row';
-                break;
-            case '2':
-                $containerClass[] = 'grid';
-                break;
+        $baseClass = match($model->flex_bootstrap) {
+            '0' => 'flex',
+            '1' => 'row',
+            '2' => 'grid',
+            default => null,
+        };
+
+        if ($baseClass !== null) {
+            $containerClass[] = $baseClass;
         }
 
         if (in_array($model->flex_justify, ['start', 'end', 'center', 'around', 'between', 'evenly'])) {
@@ -105,8 +110,10 @@ class FlexController extends AbstractContentElementController
         return $template->getResponse();
     }
 
-    protected static function makeSegmentation($segmentation, $modifier, $framework): array
+    protected static function makeSegmentation(string $segmentation, string $modifier, string $framework): array
     {
+        $range1to12 = array_map('strval', range(1, 12));
+
         $cells = explode(':', trim(preg_replace('/\s+/', '', $segmentation)));
         $attributes = [];
 
@@ -116,7 +123,7 @@ class FlexController extends AbstractContentElementController
             $string = explode(',', $cell);
             $cellClass = [];
 
-            if (count($string) === 0 || !$framework) {
+            if ($framework === '0') {
                 continue;
             }
 
@@ -139,7 +146,7 @@ class FlexController extends AbstractContentElementController
             // Flex
             if ($framework === '1') {
                 // .col-*
-                if (in_array(current($string), [...array_map('strval', range(1, 12)), 'a', 'auto', 'n', 'none'], true)) {
+                if (in_array(current($string), [...$range1to12, 'a', 'auto', 'n', 'none'], true)) {
                     $col = current($string);
 
                     if ($col === 'n' || $col === 'none') {
@@ -159,7 +166,7 @@ class FlexController extends AbstractContentElementController
                 }
 
                 // .offset-*
-                if (in_array(current($string), ['', ...array_map('strval', range(0, 12))], true)) {
+                if (in_array(current($string), ['', '0', ...$range1to12], true)) {
                     $offset = current($string);
 
                     if ($offset !== '') {
@@ -174,7 +181,7 @@ class FlexController extends AbstractContentElementController
             // Grid
             if ($framework === '2') {
                 // .col-* & .offset-*
-                if (current($string) === '' || preg_match('/^(([a1-9][0-2]{0,1})\/)?([1-9][0-2]{0,2})$/', current($string), $matches)) {
+                if (current($string) === '' || preg_match('/^((a|1[0-2]|[1-9])\/)?(1[0-2]|[1-9])$/', current($string), $matches)) {
                     $col = current($string);
 
                     if ($col !== '') {
@@ -193,7 +200,7 @@ class FlexController extends AbstractContentElementController
                 }
 
                 // .row-* & .row-offset-*
-                if (current($string) === '' || preg_match('/^(([a1-9][0-2]{0,1})\/)?([1-9][0-2]{0,2})$/', current($string), $matches)) {
+                if (current($string) === '' || preg_match('/^((a|1[0-2]|[1-9])\/)?(1[0-2]|[1-9])$/', current($string), $matches)) {
                     $row = current($string);
 
                     if ($row !== '') {
@@ -213,7 +220,7 @@ class FlexController extends AbstractContentElementController
             }
 
             // .order-*
-            if (in_array(current($string), [...array_map('strval', range(1, 12)), 'f', 'first', 'l', 'last'], true)) {
+            if (in_array(current($string), [...$range1to12, 'f', 'first', 'l', 'last'], true)) {
                 $order = current($string);
 
                 if ($order === 'f') $order = 'first';
@@ -231,7 +238,7 @@ class FlexController extends AbstractContentElementController
         return $attributes;
     }
 
-    protected static function makeClasses($class): array
+    protected static function makeClasses(string $class): array
     {
         $cells = explode(':', $class);
         $class = [];
