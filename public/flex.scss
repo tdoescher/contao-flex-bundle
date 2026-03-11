@@ -10,17 +10,17 @@ $flex-display: block, none;
 
 @property --_fai { syntax: "start | end | center | baseline | stretch | normal"; inherits: false; initial-value: normal; }
 @property --_fas { syntax: "start | end | center | baseline | stretch | auto"; inherits: false; initial-value: auto; }
-@property --_fc { syntax: "1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12"; inherits: false; initial-value: 12; }
-@property --_ff { syntax: "0 0 auto | 1 0 0"; inherits: false; initial-value: 0 0 auto; }
-@property --_fgx { syntax: "<length>"; inherits: false; initial-value: 1.5rem; }
-@property --_fgy { syntax: "<length>"; inherits: false; initial-value: 1.5rem; }
+@property --_fc { syntax: "<integer>"; inherits: false; initial-value: 12; }
+@property --_fd { syntax: "block | none"; inherits: false; initial-value: block; }
+@property --_ff { syntax: "*"; inherits: false; initial-value: 0 0 auto; }
+@property --_fgx { syntax: "<length>"; inherits: false; initial-value: 24px; }
+@property --_fgy { syntax: "<length>"; inherits: false; initial-value: 24px; }
 @property --_fjc { syntax: "start | end | center | space-around | space-between | space-evenly | normal"; inherits: false; initial-value: normal; }
 @property --_fjs { syntax: "start | end | center | baseline | stretch | auto"; inherits: false; initial-value: auto; }
-@property --_fo { syntax: "-1 | 0 | 1 | 2 | 3 | 4 | 5 | 6"; inherits: false; initial-value: 0; }
-@property --_fos { syntax: "1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | auto"; inherits: false; initial-value: auto; }
-@property --_fr { syntax: "1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12"; inherits: false; initial-value: 12; }
-@property --_fro { syntax: "1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | auto"; inherits: false; initial-value: auto; }
-@property --_fd { syntax: "block | none"; inherits: false; initial-value: block; }
+@property --_fo { syntax: "<integer>"; inherits: false; initial-value: 0; }
+@property --_fos { syntax: "<integer> | auto"; inherits: false; initial-value: auto; }
+@property --_fr { syntax: "<integer>"; inherits: false; initial-value: 12; }
+@property --_fro { syntax: "<integer> | auto"; inherits: false; initial-value: auto; }
 
 .content-flex {
   > .row {
