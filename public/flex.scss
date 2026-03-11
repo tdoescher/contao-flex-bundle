@@ -19,6 +19,7 @@ $flex-display: block, none;
     --_ff: 0 0 auto;
     --_fos: 0;
     --_fo: 0;
+    --_fw: unset;
   }
   > .row > * {
     flex: var(--_ff);
@@ -57,7 +58,7 @@ $flex-display: block, none;
   .col#{$modifier} { --_ff: 1 0 0; --_fw: 100%; }
   .col#{$modifier}-auto { --_fw: auto; }
   @for $index from 1 through 12 {
-    .col#{$modifier}-#{$index} { --_fc: #{$index}; --_fw: unset; }
+    .col#{$modifier}-#{$index} { --_fc: #{$index}; }
     .row#{$modifier}-#{$index} { --_fr: #{$index}; }
   }
   @each $key, $value in $flex-spacings {
