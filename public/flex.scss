@@ -3,46 +3,52 @@ $flex-spacings: (0: 0, 1: 0.25rem, 2: 0.5rem, 3: 1rem, 4: 1.5rem, 5: 3rem) !defa
 
 $flex-orders: (first: -1, 0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, last: 6);
 $flex-justify: (start: start, end: end, center: center, around: space-around, between: space-between, evenly: space-evenly);
-$flex-justify-self: auto, start, end, center, baseline, stretch;
+$flex-justify-self: start, end, center, baseline, stretch, auto;
 $flex-align: start, end, center, baseline, stretch;
-$flex-align-self: auto, start, end, center, baseline, stretch;
+$flex-align-self: start, end, center, baseline, stretch, auto;
 $flex-display: block, none;
 
-.content-flex { --_fgx: 1.5rem; --_fgy: 1.5rem; --_fc: 12; --_fjs: auto; --_fas: auto;
+@property --_fai { syntax: "start | end | center | baseline | stretch | normal"; inherits: false; initial-value: normal; }
+@property --_fas { syntax: "start | end | center | baseline | stretch | auto"; inherits: false; initial-value: auto; }
+@property --_fc { syntax: "1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12"; inherits: false; initial-value: 12; }
+@property --_ff { syntax: "0 0 auto | 1 0 0"; inherits: false; initial-value: 0 0 auto; }
+@property --_fgx { syntax: "<length>"; inherits: false; initial-value: 1.5rem; }
+@property --_fgy { syntax: "<length>"; inherits: false; initial-value: 1.5rem; }
+@property --_fjc { syntax: "start | end | center | space-around | space-between | space-evenly | normal"; inherits: false; initial-value: normal; }
+@property --_fjs { syntax: "start | end | center | baseline | stretch | auto"; inherits: false; initial-value: auto; }
+@property --_fo { syntax: "-1 | 0 | 1 | 2 | 3 | 4 | 5 | 6"; inherits: false; initial-value: 0; }
+@property --_fos { syntax: "1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | auto"; inherits: false; initial-value: auto; }
+@property --_fr { syntax: "1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12"; inherits: false; initial-value: 12; }
+@property --_fro { syntax: "1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | auto"; inherits: false; initial-value: auto; }
+@property --_fd { syntax: "block | none"; inherits: false; initial-value: block; }
+
+.content-flex {
   > .row {
     display: flex;
     flex-wrap: wrap;
     margin-block: calc(var(--_fgy) / -2);
     margin-inline: calc(var(--_fgx) / -2);
-    justify-content: var(--_fjc, normal);
-    align-items: var(--_fai, normal);
-    --_ff: 0 0 auto;
-    --_fos: 0;
-    --_fo: 0;
-    --_fw: unset;
+    justify-content: var(--_fjc);
+    align-items: var(--_fai);
   }
   > .row > * {
     flex: var(--_ff);
     order: var(--_fo);
     justify-self: var(--_fjs);
     align-self: var(--_fas);
-    width: var(--_fw, calc(100% / 12 * var(--_fc)));
+    width: var(--_fw, calc(8.33333% * var(--_fc)));
     max-width: 100%;
-    margin-inline-start: calc(100% / 12 * var(--_fos));
+    margin-inline-start: calc(8.33333% * var(--_fos));
     padding-block: calc(var(--_fgy) / 2);
     padding-inline: calc(var(--_fgx) / 2);
     box-sizing: border-box;
   }
-
   > .grid {
     display: grid;
     gap: var(--_fgy) var(--_fgx);
     grid-template-columns: repeat(12, 1fr);
-    justify-content: var(--_fjc, normal);
-    align-items: var(--_fai, normal);
-    --_fro: auto;
-    --_fr: auto;
-    --_fos: auto;
+    justify-content: var(--_fjc);
+    align-items: var(--_fai);
   }
   > .grid > * {
     grid-column: var(--_fos) / span var(--_fc);
@@ -50,15 +56,14 @@ $flex-display: block, none;
     justify-self: var(--_fjs);
     align-self: var(--_fas);
   }
-
   > * > [class^="d-"], > * > [class*=" d-"] { display: var(--_fd, revert) !important; }
 }
 
 @mixin flex-generate($modifier: "") {
-  .col#{$modifier} { --_ff: 1 0 0; --_fw: 100%; }
+  .col#{$modifier} { --_ff: 1 0 0; --_fc: 12; }
   .col#{$modifier}-auto { --_fw: auto; }
   @for $index from 1 through 12 {
-    .col#{$modifier}-#{$index} { --_fc: #{$index}; }
+    .col#{$modifier}-#{$index} { --_fc: #{$index}; --_fw: unset; }
     .row#{$modifier}-#{$index} { --_fr: #{$index}; }
   }
   @each $key, $value in $flex-spacings {
