@@ -19,7 +19,7 @@ $flex-display: block, none;
 @property --_fjs { syntax: "start | end | center | baseline | stretch | auto"; inherits: false; initial-value: auto; }
 @property --_fo { syntax: "<integer>"; inherits: false; initial-value: 0; }
 @property --_fos { syntax: "<integer> | auto"; inherits: false; initial-value: auto; }
-@property --_fr { syntax: "<integer>"; inherits: false; initial-value: 12; }
+@property --_fr { syntax: "<integer>"; inherits: false; initial-value: 1; }
 @property --_fro { syntax: "<integer> | auto"; inherits: false; initial-value: auto; }
 
 .content-flex {
