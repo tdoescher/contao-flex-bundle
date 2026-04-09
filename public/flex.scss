@@ -22,7 +22,7 @@ $flex-display: block, none;
 @property --_fr { syntax: "<integer>"; inherits: false; initial-value: 1; }
 @property --_fro { syntax: "<integer> | auto"; inherits: false; initial-value: auto; }
 
-.content-flex {
+.content-flex { display: flow-root;
   > .row {
     display: flex;
     flex-wrap: wrap;
