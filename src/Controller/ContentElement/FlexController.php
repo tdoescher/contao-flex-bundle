@@ -220,7 +220,7 @@ class FlexController extends AbstractContentElementController
             }
 
             // .order-*
-            if (in_array(current($string), [...$range1to12, 'f', 'first', 'l', 'last'], true)) {
+            if (in_array(current($string), [...array_map('strval', range(0, 5)), 'f', 'first', 'l', 'last'], true)) {
                 $order = current($string);
 
                 if ($order === 'f') $order = 'first';
