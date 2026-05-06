@@ -12,6 +12,7 @@
 namespace tdoescher\FlexBundle\Controller\ContentElement;
 
 use Contao\ContentModel;
+use Contao\Controller;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\CoreBundle\Routing\ScopeMatcher;
@@ -28,10 +29,12 @@ class FlexController extends AbstractContentElementController
 
     protected function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
+        Controller::loadDataContainer('tl_content');
+
         if ($this->scopeMatcher->isBackendRequest($request)) {
             $wildcard = [];
 
-            foreach (['xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'class', 'container_class'] as $field) {
+            foreach ([ 'xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'class', 'container_class' ] as $field) {
                 if ($model->{'flex_' . $field}) {
                     $wildcard[] = '<strong>' . $GLOBALS['TL_LANG']['tl_content']['flex_' . $field][0] . ':</strong> ' . $model->{'flex_' . $field};
                 }
@@ -46,7 +49,7 @@ class FlexController extends AbstractContentElementController
         }
 
         $segmentation = [];
-        foreach (['xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as $field) {
+        foreach ([ 'xs', 'sm', 'md', 'lg', 'xl', 'xxl' ] as $field) {
             if ($model->{'flex_' . $field}) {
                 $segmentation[$field] = self::makeSegmentation($model->{'flex_' . $field}, $field, $model->flex_bootstrap);
             }
@@ -70,33 +73,32 @@ class FlexController extends AbstractContentElementController
 
         $containerClass = [];
 
-        $baseClass = match($model->flex_bootstrap) {
+        $baseClass = match ($model->flex_bootstrap) {
             '0' => 'flex',
             '1' => 'row',
             '2' => 'grid',
             default => null,
         };
-
         if ($baseClass !== null) {
             $containerClass[] = $baseClass;
         }
 
-        if (in_array($model->flex_justify, ['start', 'end', 'center', 'around', 'between', 'evenly'])) {
+        if (in_array($model->flex_justify, [ 'start', 'end', 'center', 'around', 'between', 'evenly' ])) {
             $containerClass[] = 'justify-content-' . $model->flex_justify;
         }
 
-        if (in_array($model->flex_align, ['start', 'end', 'center', 'baseline', 'stretch'])) {
+        if (in_array($model->flex_align, [ 'start', 'end', 'center', 'baseline', 'stretch' ])) {
             $containerClass[] = 'align-items-' . $model->flex_align;
         }
 
-        if ($model->flex_gutter === $model->flex_gutter_y && in_array($model->flex_gutter, ['0', '1', '2', '3', '4', '5'])) {
+        $gutters = array_filter(array_keys($GLOBALS['TL_DCA']['tl_content']['fields']['flex_gutter']['options']), fn($k) => $k !== 'd');
+        if ($model->flex_gutter === $model->flex_gutter_y && in_array($model->flex_gutter, $gutters)) {
             $containerClass[] = 'g-' . $model->flex_gutter;
-        }
-        else {
-            if (in_array($model->flex_gutter, ['0', '1', '2', '3', '4', '5'])) {
+        } else {
+            if (in_array($model->flex_gutter, $gutters)) {
                 $containerClass[] = 'gx-' . $model->flex_gutter;
             }
-            if (in_array($model->flex_gutter_y, ['0', '1', '2', '3', '4', '5'])) {
+            if (in_array($model->flex_gutter_y, $gutters)) {
                 $containerClass[] = 'gy-' . $model->flex_gutter_y;
             }
         }
@@ -128,14 +130,13 @@ class FlexController extends AbstractContentElementController
             }
 
             // .d-*
-            if (in_array(current($string), ['h', 'hide', 'hidden', 's', 'show'], true)) {
+            if (in_array(current($string), [ 'h', 'hide', 'hidden', 's', 'show' ], true)) {
                 $display = current($string);
 
                 if ($display === 'h' || $display === 'hide' || $display === 'hidden') {
                     $cellClass[] = 'd' . $modifier . '-none';
                     $attributes['visible'][$position] = 'hide';
-                }
-                else {
+                } else {
                     $cellClass[] = 'd' . $modifier . '-block';
                     $attributes['visible'][$position] = 'show';
                 }
@@ -146,18 +147,16 @@ class FlexController extends AbstractContentElementController
             // Flex
             if ($framework === '1') {
                 // .col-*
-                if (in_array(current($string), [...$range1to12, 'a', 'auto', 'n', 'none'], true)) {
+                if (in_array(current($string), [ ...$range1to12, 'a', 'auto', 'n', 'none' ], true)) {
                     $col = current($string);
 
                     if ($col === 'n' || $col === 'none') {
                         $cellClass[] = 'col' . $modifier;
                         $attributes['col'][$position] = 'narrow';
-                    }
-                    else if ($col === 'a') {
+                    } else if ($col === 'a') {
                         $cellClass[] = 'col' . $modifier . '-auto';
                         $attributes['col'][$position] = 'auto';
-                    }
-                    else {
+                    } else {
                         $cellClass[] = 'col' . $modifier . '-' . $col;
                         $attributes['col'][$position] = $col;
                     }
@@ -166,7 +165,7 @@ class FlexController extends AbstractContentElementController
                 }
 
                 // .offset-*
-                if (in_array(current($string), ['', '0', ...$range1to12], true)) {
+                if (in_array(current($string), [ '', '0', ...$range1to12 ], true)) {
                     $offset = current($string);
 
                     if ($offset !== '') {
@@ -220,7 +219,7 @@ class FlexController extends AbstractContentElementController
             }
 
             // .order-*
-            if (in_array(current($string), [...array_map('strval', range(0, 5)), 'f', 'first', 'l', 'last'], true)) {
+            if (in_array(current($string), [ ...array_map('strval', range(0, 5)), 'f', 'first', 'l', 'last' ], true)) {
                 $order = current($string);
 
                 if ($order === 'f') $order = 'first';
