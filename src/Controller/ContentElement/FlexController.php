@@ -17,6 +17,7 @@ use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\CoreBundle\Routing\ScopeMatcher;
 use Contao\CoreBundle\Twig\FragmentTemplate;
+use Contao\StringUtil;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -40,7 +41,7 @@ class FlexController extends AbstractContentElementController
                 }
             }
 
-            $cssID = unserialize($model->cssID);
+            $cssID = StringUtil::deserialize($model->cssID, true);
             if (!empty($cssID[1])) {
                 $wildcard[] = '<strong>' . $GLOBALS['TL_LANG']['tl_content']['flex_main_class'] . ':</strong> ' . $cssID[1];
             }
@@ -61,7 +62,7 @@ class FlexController extends AbstractContentElementController
             $GLOBALS['TL_FLEX'] = [];
         }
 
-        $GLOBALS['TL_FLEX']['tl_content.' . $model->id] = [
+        $GLOBALS['TL_FLEX']['tl_content.' . ($model->origId ?: $model->id)] = [
             'type' => $model->type,
             'position' => 0,
             'parent' => $model->ptable . '.' . $model->pid,
